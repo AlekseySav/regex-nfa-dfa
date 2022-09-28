@@ -1,0 +1,18 @@
+#!/bin/python3
+
+# compare first argument and stdin
+
+import sys
+from itertools import zip_longest as zip
+
+s = input()
+failed = False
+
+for index, (i, j) in enumerate(zip(s, sys.argv[1])):
+    if i == j:
+        continue
+    print(f'at {index}: expected \'{j}\', got \'{i}\'', file=sys.stderr)
+    failed = True
+
+if failed:
+    print(f'expected:\t"{sys.argv[1]}"\ngot:\t\t"{s}"', file=sys.stderr)

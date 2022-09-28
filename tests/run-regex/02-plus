@@ -1,0 +1,10 @@
+/ echo "(a+b+c)*" | ./re-nfa | ./nfa-noeps | ./noeps-dfa | ./dfa-run %{this} | tools/cmp ";a;aa;abc;cbac;"
+
+a
+aa
+aaaadb
+abc
+bababbad
+cbac
+d
+adada

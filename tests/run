@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for file in tests/*/*; do
+    sedfile=$(echo $file | sed "s/\//\\\\\//g")
+    command=$(cat $file | sed "1 s/%{this}/\"$sedfile\"/g" | head -n 1 | tail -c +2)
+    echo $file... >&2
+    eval $command
+done

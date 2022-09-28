@@ -1,0 +1,10 @@
+/ echo "a*" | ./re-nfa | ./nfa-noeps | ./noeps-dfa | ./dfa-run %{this} | tools/cmp ";a;aa;aaaaaaaaaaaa;"
+/ (empty line is also ok)
+
+a
+aa
+aaaaaaaaaaaa
+b
+ba
+bba
+badba
