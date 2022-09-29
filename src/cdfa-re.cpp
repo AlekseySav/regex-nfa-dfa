@@ -74,9 +74,11 @@ int main() {
     re_dfs(a.q0);
     std::string result;
     for (auto& v_id : a.F) {
-        const std::string& re = v_id == a.q0 ? "" : regex.nodes[a.q0][v_id];
         const std::string& re_loop = regex.nodes[v_id][v_id];
+        const std::string& re = v_id == a.q0 ? "" : regex.nodes[a.q0][v_id];
         add(result, re + star(re_loop));
+        if (!re_loop.size() && v_id == a.q0)
+            add(result, "0");
     }
     std::cout << result << '\n';
 }

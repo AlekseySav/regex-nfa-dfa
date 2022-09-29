@@ -10,7 +10,7 @@ static Automata a;
 
 static struct Slice s1(char c) {
     int b = a.node();
-    int e = a.node(b, chrid(c));
+    int e = a.node(b, c == '0' ? chrid('\e') : chrid(c));
     return { b, e };
 }
 
