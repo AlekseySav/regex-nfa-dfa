@@ -1,4 +1,5 @@
 # Regex, NFA, DFA, ...
+<<<<<<< HEAD
 
 ## structure
 
@@ -50,3 +51,5 @@ to reset default alphabet run
 ## tests
 
 in progress....
+=======
+>>>>>>> 65f8a72 (init)
