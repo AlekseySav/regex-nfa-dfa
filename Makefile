@@ -1,4 +1,4 @@
-targets = trace dfa-run re-nfa nfa-noeps noeps-dfa dfa-cdfa cdfa-inv alphabet.h
+targets = trace dfa-run re-nfa nfa-1nfa 1nfa-dfa dfa-cdfa cdfa-inv alphabet.h
 
 .PHONY: all clean test
 

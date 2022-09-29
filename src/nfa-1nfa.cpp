@@ -1,7 +1,7 @@
 #include "automata.h"
 
-Automata a;
-std::vector<bool> used;
+static Automata a;
+static std::vector<bool> used;
 
 void chain_dfs(int p, int n) {
     used[n] = true;
@@ -9,25 +9,18 @@ void chain_dfs(int p, int n) {
         if (!used[i]) chain_dfs(p, i);
         if (a.F.contains(i)) a.F.emplace(n);
     }
-    for (int c = 0; c < W; c++)
+    for (auto&[c, to] : a.nodes[n])
         if (c != chrid('\e'))
-            for (int i : a.nodes[n][c])
+            for (int i : to)
                 a.edge(p, i, c);
 }
 
 void access_dfs(int n) {
     if (used[n]) return;
     used[n] = true;
-    for (int c = 0; c < W; c++)
-        for (int i : a.nodes[n][c])
+    for (auto&[c, to] : a.nodes[n])
+        for (int i : to)
             access_dfs(i);
-}
-
-bool valid(const std::array<std::vector<int>, W>& node) {
-    for (int c = 0; c < W; c++)
-        if (node[c].size())
-            return true;
-    return false;
 }
 
 int main(int argc, char** argv) {

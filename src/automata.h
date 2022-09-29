@@ -2,7 +2,7 @@
 
 /*
  * Automata is mutual structure for all utilities
- * escape '\e' character used as epsilon (because they are simmilar ahaha) 
+ * escape '\e' character used as epsilon (because they are simmilar ahaha)
  */
 
 #include <cstddef>
@@ -15,7 +15,7 @@
 
 #include "../alphabet.h"
 
-template<int W>
+template<typename T>
 struct Automata_w {
 public:
     void serialize();
@@ -25,9 +25,11 @@ public:
         int x = size() - 1;
         std::swap(nodes[x], nodes[n]);
         for (int i = 0; i < size(); i++) {
-            for (int c = 0; c < W; c++) {
-                auto& v = nodes[i][c];
-                if (v.find(x) != v.end()) v.erase(x), v.emplace(n);
+            for (auto&[c, to] : nodes[i]) {
+                if (to.find(x) != to.end()) {
+                    to.erase(x);
+                    to.emplace(n);
+                }
             }
         }
         nodes.pop_back();
@@ -36,7 +38,7 @@ public:
         if (F.contains(x)) F.erase(x), F.emplace(n);
     }
 
-    constexpr void edge(int from, int to, int c) { nodes[from][c].emplace(to); }
+    constexpr void edge(int from, int to, T c) { nodes[from][c].emplace(to); }
     constexpr void edge(int from, int to) { edge(from, to, chrid('\e')); }
 
 
@@ -46,7 +48,7 @@ public:
         return n;
     }
 
-    constexpr int node(int n, int c) {
+    constexpr int node(int n, T c) {
         int x = node();
         edge(n, x, c);
         return x;
@@ -56,28 +58,28 @@ public:
 
     constexpr int size() const { return nodes.size(); }
 public:
-    std::vector<std::array<std::unordered_set<int>, W>> nodes;
+    std::vector<std::unordered_map<T, std::unordered_set<int>>> nodes;
     std::unordered_set<int> F;
     int q0;
 };
 
-using Automata = Automata_w<W>;
+using Automata = Automata_w<int>;
 
-template<int W>
-void Automata_w<W>::serialize() {
+template<typename T>
+void Automata_w<T>::serialize() {
     std::cout << nodes.size() << '\n' << q0 << '\n' << F.size() << '\n';
     for (auto i : F)
         std::cout << i << ' ';
     std::cout << '\n';
     for (int i = 0; i < nodes.size(); i++)
-        for (int c = 0; c < nodes[i].size(); c++)
-            for (int j : nodes[i][c])
+        for (auto&[c, to] : nodes[i])
+            for (int j : to)
                 std::cout << i << ' ' << j << ' ' << c << '\n';
     std::cout << "0 0 0\n";
 }
 
-template<int W>
-void Automata_w<W>::deserialize() {
+template<typename T>
+void Automata_w<T>::deserialize() {
     int n_nodes, n_finals, i, j, c;
     std::cin >> n_nodes >> q0 >> n_finals;
     nodes.resize(n_nodes);

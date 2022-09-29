@@ -3,8 +3,7 @@
 
 static std::vector<int> edges(const Automata& a, int i, int j) {
     std::vector<int> res;
-    for (int c = 0; c < W; c++) {
-        auto& v = a.nodes[i][c];
+    for (auto&[c, v] : a.nodes[i]) {
         if (std::find(v.begin(), v.end(), j) != v.end())
             res.push_back(c);
     }

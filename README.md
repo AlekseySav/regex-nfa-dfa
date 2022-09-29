@@ -9,8 +9,8 @@ all subtasks are presented as separate programs
 #### required by task:
 
 - re-nfa               -- parse regex into NFA
-- nfa-noeps            -- remove all epsilon-edges from NFA
-- noeps-dfa            -- convert NFA with no epsilon-edges into DFA
+- nfa-1nfa             -- remove all epsilon-edges from NFA
+- 1nfa-dfa             -- convert NFA with no epsilon-edges into DFA
 - dfa-cdfa             -- convert DFA to CDFA
 - cdfa-inv             -- inverse CDFA
 

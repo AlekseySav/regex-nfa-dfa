@@ -1,7 +1,7 @@
 #include "automata.h"
 #include <fstream>
 
-bool run(const Automata& a, const std::string& s) {
+bool run(Automata& a, const std::string& s) {
     int state = a.q0;
     for (char c : s) {
         auto& v = a.nodes[state][chrid(c)];

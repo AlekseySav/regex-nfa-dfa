@@ -4,9 +4,9 @@ int main() {
     Automata a;
     a.deserialize();
     int garbage = a.node();
-    for (int i = 0; i < a.size(); i++)
+    for (auto& node : a.nodes)
         for (int c = 0; c < W; c++)
-            if (!a.nodes[i][c].size() && c != chrid('\e'))
-                a.nodes[i][c].emplace(garbage);
+            if (!node[c].size() && c != chrid('\e'))
+                node[c].emplace(garbage);
     a.serialize();
 }
