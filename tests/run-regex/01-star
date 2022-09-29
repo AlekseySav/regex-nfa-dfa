@@ -1,4 +1,4 @@
-/ echo "a*" | ./re-nfa | ./nfa-noeps | ./noeps-dfa | ./dfa-run %{this} | tools/cmp ";a;aa;aaaaaaaaaaaa;"
+/ echo "a*" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./dfa-run %{this} | tools/cmp ";a;aa;aaaaaaaaaaaa;"
 / (empty line is also ok)
 
 a

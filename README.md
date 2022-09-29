@@ -8,16 +8,18 @@ all subtasks are presented as separate programs
 
 #### required by task:
 
-- re-nfa               -- parse regex into NFA
-- nfa-1nfa             -- remove all epsilon-edges from NFA
-- 1nfa-dfa             -- convert NFA with no epsilon-edges into DFA
-- dfa-cdfa             -- convert DFA to CDFA
-- cdfa-inv             -- inverse CDFA
+- ```re-nfa```               &mdash; parse regex into NFA
+- ```nfa-1nfa```             &mdash; remove all epsilon-edges from NFA
+- ```1nfa-dfa```             &mdash; convert NFA with no epsilon-edges into DFA
+- ```dfa-cdfa```             &mdash; convert DFA to CDFA
+- ```cdfa-inv```             &mdash; inverse CDFA
+- ```cdfa-min```             &mdash; convert CDFA to minimal CDFA (not implemented yet)
+- ```cdfa-re```              &mdash; convert CDFA to regex (in progress, has some bugs)
 
 #### ones that improve debugging and quality of life:
 
-- trace                -- nicely print automata
-- dfa-run < file >     -- based on DFA/CDFA performs search through each line in file
+- ```trace```                &mdash; nicely print automata
+- ```dfa-run <file>```     &mdash; based on DFA/CDFA performs search through each line in file
 
 ### note
 
@@ -28,7 +30,7 @@ for example:
 ```$ echo $regex | re-nfa | trace```
     will build NFA from ```$regex``` and print it
 
-```$ echo $regex | re-nfa | nfa-noeps | noeps-dfa | dfa-cdfa | dfa-run 1.txt```
+```$ echo $regex | re-nfa | nfa-1nfa | 1nfa-dfa | dfa-cdfa | dfa-run 1.txt```
     will build CDFA base on ```$regex``` and run it for each line in ```1.txt```
 
 ## customizations

@@ -1,4 +1,4 @@
-/ echo "(a+b+c).a*.(b+c)" | ./re-nfa | ./nfa-noeps | ./noeps-dfa | ./dfa-run %{this} | tools/cmp "aab;bac;"
+/ echo "(a+b+c).a*.(b+c)" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./dfa-run %{this} | tools/cmp "aab;bac;"
 
 aab
 bac

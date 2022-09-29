@@ -1,0 +1,23 @@
+/ echo "(a*.bc.(x+y)).ea+b+cde.qwer+(x.y)+z" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-re | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./dfa-cdfa | ./dfa-run %{this} | tools/cmp "aaaabcxea;aaaabcyea;bcxea;b;cdeqwer;xy;z;"
+
+aaaabcxea
+aaaabcxyea
+aaaabcxa
+aaaacxa
+aaaabcyea
+bcxea
+bacxea
+abacxea
+abcaxea
+a
+x
+y
+xyz
+axy
+aea
+b
+cdeqwer
+xy
+z
+zz
+zzxy

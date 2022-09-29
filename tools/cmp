@@ -9,10 +9,7 @@ s = input()
 failed = False
 
 for index, (i, j) in enumerate(zip(s, sys.argv[1])):
-    if i == j:
-        continue
-    print(f'at {index}: expected \'{j}\', got \'{i}\'', file=sys.stderr)
-    failed = True
+    failed = failed or i != j
 
 if failed:
-    print(f'expected:\t"{sys.argv[1]}"\ngot:\t\t"{s}"', file=sys.stderr)
+    print(f'failed\nexpected:\t"{sys.argv[1]}"\ngot:\t\t"{s}"', file=sys.stderr)

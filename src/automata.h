@@ -5,6 +5,7 @@
  * escape '\e' character used as epsilon (because they are simmilar ahaha)
  */
 
+#include <cassert>
 #include <cstddef>
 #include <vector>
 #include <set>
