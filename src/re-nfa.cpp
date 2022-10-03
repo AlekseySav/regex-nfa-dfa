@@ -8,7 +8,7 @@ struct Slice {
 
 static Automata a;
 
-static struct Slice s1(char c) {
+static struct Slice from_literal(char c) {
     int b = a.node();
     int e = a.node(b, c == '0' ? chrid('\e') : chrid(c));
     return { b, e };
@@ -51,7 +51,7 @@ static Slice compile(char e = '\n') {
                 }
                 break;
             default:
-                sub.push(c == '(' ? compile(')') : s1(c));
+                sub.push(c == '(' ? compile(')') : from_literal(c));
                 n_dots++; /* implicit dot */
                 break;
         }
@@ -67,6 +67,6 @@ static Slice compile(char e = '\n') {
 int main(int argc, char** argv) {
     Slice s = compile();
     a.q0 = s.begin;
-    a.F.emplace(s.end);
+    a.qfinal.emplace(s.end);
     a.serialize();
 }

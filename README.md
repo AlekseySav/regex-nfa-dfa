@@ -14,7 +14,7 @@ all subtasks are presented as separate programs
 - ```dfa-cdfa```             &mdash; convert DFA to CDFA
 - ```cdfa-inv```             &mdash; inverse CDFA
 - ```cdfa-min```             &mdash; convert CDFA to minimal CDFA (not implemented yet)
-- ```cdfa-re```              &mdash; convert CDFA to regex (in progress, has some bugs)
+- ```cdfa-re```              &mdash; convert CDFA to regex
 
 #### ones that improve debugging and quality of life:
 

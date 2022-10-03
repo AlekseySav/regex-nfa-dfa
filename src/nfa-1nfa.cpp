@@ -7,7 +7,7 @@ void chain_dfs(int p, int n) {
     used[n] = true;
     for (int i : a.nodes[n][chrid('\e')]) {
         if (!used[i]) chain_dfs(p, i);
-        if (a.F.contains(i)) a.F.emplace(n);
+        if (a.qfinal.contains(i)) a.qfinal.emplace(n);
     }
     for (auto&[c, to] : a.nodes[n])
         if (c != chrid('\e'))
@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
     access_dfs(a.q0);
     for (int i = a.size() - 1; i >= 0; i--)
         if (!used[i])
-            a.rm_node(i);
+            a.remove_node(i);
 
     a.serialize();
 }

@@ -60,7 +60,7 @@ void garbage_dfs(int n) {
     for (auto&[to, re] : regex.nodes[n]) {
         if (to == n || prev < 0 || garbage[to]) continue;
         add(regex.nodes[prev][to], cat(cat(regex.nodes[prev][n], star(regex.nodes[n][n])), re));
-        if (!a.F.contains(n)) regex.nodes[prev].erase(n);
+        if (!a.qfinal.contains(n)) regex.nodes[prev].erase(n);
     }
 }*/
 
@@ -93,7 +93,7 @@ int main() {
         }
         if (!dest.contains(n)) dest.emplace(n, "");
     }
-    for (int i : a.F)
+    for (int i : a.qfinal)
         regex.nodes[i][a.size()] = "";
 
     g_used.resize(a.size());

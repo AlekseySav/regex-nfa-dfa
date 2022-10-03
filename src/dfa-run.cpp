@@ -8,7 +8,7 @@ bool run(Automata& a, const std::string& s) {
         if (!v.size()) return false;
         state = *v.begin();
     }
-    return a.F.contains(state);
+    return a.qfinal.contains(state);
 }
 
 int main(int argc, char** argv) {
