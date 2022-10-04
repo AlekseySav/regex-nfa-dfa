@@ -18,6 +18,8 @@
 
 struct Automata {
 public:
+    using edges_t = std::vector<std::unordered_map<int, std::unordered_set<int>>>;
+
     void serialize();
     void deserialize();
 
@@ -58,7 +60,7 @@ public:
     int node(int n) { return node(n, chrid('\e')); }
     int size() const { return nodes.size(); }
 public:
-    std::vector<std::unordered_map<int, std::unordered_set<int>>> nodes;
+    edges_t nodes;
     std::unordered_set<int> qfinal;
     int q0;
 };

@@ -5,13 +5,12 @@ import yaml
 
 input: dict = yaml.load(sys.stdin, Loader=yaml.FullLoader)
 
-print(input['nr'])
+print(len(input) - 2)
 print(int(input['q0']) - 1)
 final = str(input['final']).split(' ')
 print(len(final))
 print(' '.join(map(str, [int(i) - 1 for i in final])))
 del input['q0']
-del input['nr']
 del input['final']
 
 for state, edges in input.items():
