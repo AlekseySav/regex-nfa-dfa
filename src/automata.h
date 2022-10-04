@@ -86,6 +86,10 @@ void Automata::deserialize() {
     for (;;) {
         std::cin >> i >> j >> c;
         if (!i && !j && !c) break;
+        if (c == -1) {
+            while ((c = std::cin.get()) != '\'');
+            c = chrid(std::cin.get());
+        }
         nodes[i][c].emplace(j);
     }
 }

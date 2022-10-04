@@ -8,6 +8,7 @@ all subtasks are presented as separate programs
 
 #### required by task:
 
+- ```in-nfa```               &mdash; read NFA
 - ```re-nfa```               &mdash; parse regex into NFA
 - ```nfa-1nfa```             &mdash; remove all epsilon-edges from NFA
 - ```1nfa-dfa```             &mdash; convert NFA with no epsilon-edges into DFA
@@ -18,8 +19,8 @@ all subtasks are presented as separate programs
 
 #### ones that improve debugging and quality of life:
 
-- ```trace```                &mdash; nicely print automata
-- ```dfa-run <file>```     &mdash; based on DFA/CDFA performs search through each line in file
+- ```trace```               &mdash; nicely print automata
+- ```dfa-run <file>```      &mdash; based on DFA/CDFA performs search through each line in file
 
 ### note
 

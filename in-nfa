@@ -1,0 +1,22 @@
+#!/bin/python3
+
+import sys
+import yaml
+
+input: dict = yaml.load(sys.stdin, Loader=yaml.FullLoader)
+
+print(input['nr'])
+print(int(input['q0']) - 1)
+final = str(input['final']).split(' ')
+print(len(final))
+print(' '.join(map(str, [int(i) - 1 for i in final])))
+del input['q0']
+del input['nr']
+del input['final']
+
+for state, edges in input.items():
+    for edge in edges.split(' '):
+        c, to = edge.split('->')
+        print(int(state) - 1, int(to) - 1, 0 if c == '\033' else '-1 \'' + c)
+
+print(0, 0, 0)
