@@ -17,7 +17,7 @@ int main() {
     auto& reg = graph.GetRegistry();
 
     for (int i = 0; i < a.size(); i++)
-        nodes[i] = reg.RegisterNode(std::to_string(i));
+        nodes[i] = reg.RegisterNode(std::to_string(i + 1));
     nodes[a.size()] = reg.RegisterNode("");
     reg.RegisterNodeAttr(nodes[a.size()], Attrs_shape, "point");
     edges.push_back(reg.RegisterEdge(nodes[a.size()], nodes[a.q0]));

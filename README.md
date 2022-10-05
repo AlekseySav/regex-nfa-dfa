@@ -18,9 +18,11 @@ all subtasks are presented as separate programs
 
 #### ones that improve debugging and quality of life:
 
+- ```is <type>...```        &mdash; check if NFA is type=[nfa,1nfa,dfa,cdfa] 
 - ```input```               &mdash; read NFA
 - ```trace```               &mdash; nicely print automata
 - ```draw```                &mdash; convert automata to graphviz
+- ```cmp-nfa <nfa>```       &mdash; compare NFA from stdin with NFA from argv[1]
 - ```dfa-run <file>```      &mdash; based on DFA/CDFA performs search through each line in file
 
 ### note

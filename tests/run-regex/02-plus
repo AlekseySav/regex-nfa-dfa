@@ -1,4 +1,4 @@
-/ echo "(a+b+c)*" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./dfa-run %{this} | tools/cmp ";a;aa;abc;cbac;"
+/ echo "(a+b+c)*" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./dfa-run s %{this} | tools/cmp ";a;aa;abc;cbac;"
 
 a
 aa

@@ -21,7 +21,7 @@ public:
     using edges_t = std::vector<std::unordered_map<int, std::unordered_set<int>>>;
 
     void serialize();
-    void deserialize();
+    void deserialize(std::istream& is = std::cin);
 
     /* copy last node to n node */
     void remove_node(int n) {
@@ -77,20 +77,20 @@ void Automata::serialize() {
     std::cout << "0 0 0\n";
 }
 
-void Automata::deserialize() {
+void Automata::deserialize(std::istream& is) {
     int n_nodes, n_finals, i, j, c;
-    std::cin >> n_nodes >> q0 >> n_finals;
+    is >> n_nodes >> q0 >> n_finals;
     nodes.resize(n_nodes);
     while (n_finals--) {
-        std::cin >> i;
+        is >> i;
         qfinal.emplace(i);
     }
     for (;;) {
-        std::cin >> i >> j >> c;
+        is >> i >> j >> c;
         if (!i && !j && !c) break;
         if (c == -1) {
-            while ((c = std::cin.get()) != '\'');
-            c = chrid(std::cin.get());
+            while ((c = is.get()) != '\'');
+            c = chrid(is.get());
         }
         nodes[i][c].emplace(j);
     }

@@ -1,0 +1,6 @@
+#!/bin/python
+
+try:
+    input()
+except:
+    print('failed')

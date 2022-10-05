@@ -1,0 +1,135 @@
+/$
+
+/ input is dfa already
+$ ./input "%{in-1}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-1}\")"
+$ ./input "%{in-2}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-2}\")"
+$ ./input "%{in-3}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-3}\")"
+$ ./input "%{in-4}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-4}\")"
+$ ./input "%{in-5}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-5}\")"
+
+/ input is not dfa
+/ dfa-run asserts that input is DFA, so only need to ckeck if output is same
+$ ./input "%{in-6}" | ./1nfa-dfa | ./dfa-run "%{str-6}" | tools/cmp "$(./input \"%{in-6}\" | ./nfa-run \"%{str-6}\")"
+$ ./input "%{in-7}" | ./1nfa-dfa | ./dfa-run "%{str-7}" | tools/cmp ";ab;aba;abab;ababa;ababab;"
+$ ./input "%{in-8}" | ./1nfa-dfa | ./dfa-run "%{str-8}" | tools/cmp "abab;aba;abababa;abab;aba;a;"
+
+# in-1
+q0: 1
+final: 1
+1: a->1 b->2
+2:
+
+# in-2
+q0: 1
+final: 1
+1:
+
+/ "0"
+# in-3
+q0: 1
+final: 1
+1:
+
+/ "abc+0"
+# in-4
+q0: 1
+final: 1 4
+1: a->2
+2: b->3
+3: c->4
+4:
+
+/ "ab(c+d)e*f*(a+b)*"
+# in-5
+q0: 1
+final: 4 5 6 7 8 9
+1: a->2
+2: b->3
+3: c->6 d->8
+6: e->7 f->5 a->9 b->4
+8: e->7 f->5 a->9 b->4
+7: e->7 f->5 a->9 b->4
+5: f->5 a->9 b->4
+9: a->9 b->4
+4: a->9 b->4
+
+# in-6
+q0: 4
+final: 2 3 4 7 2
+1:
+2: a->3 b->4
+3: a->5 a->7
+4: z->7 y->3
+5: b->1 x->2 a->3 q->4
+6: a->6
+7: a->6
+
+# str-6
+ab
+a
+zx
+q
+hello
+abcss
+aaad
+daad
+yaa
+zaa
+qaaq
+aab
+yaxb
+yaa
+ya
+zaa
+za
+z
+yaaaaaaa
+
+/ "(ab+aba)*"
+# in-7
+q0: 5
+final: 1 4 5
+5: a->2 a->6
+2: b->4
+4: a->2 a->6
+6: b->3
+3: a->1
+1: a->2 a->6
+
+# str-7
+ab
+aba
+abab
+ababa
+ababab
+aa
+abaa
+abb
+abababaa
+abababb
+
+/ a(bab)*+a(ba)*
+# in-8
+q0: 1
+final: 2 3
+1: a->2 a->3
+2: b->4
+4: a->5
+5: b->2
+3: b->6
+6: a->3
+
+# str-8
+abab
+aba
+aa
+abababa
+ababbabababa
+aaba
+ababbaba
+abab
+aba
+ab
+ababba
+b
+a
