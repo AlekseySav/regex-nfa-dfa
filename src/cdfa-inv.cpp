@@ -4,12 +4,16 @@ int main() {
     Automata input;
     input.deserialize();
 
-    std::vector<bool> Q(input.size());
-    for (int i : input.qfinal)
-        Q[i] = 1;
-    input.qfinal = {};
-    for (int i = 0; i < Q.size(); i++)
-        if (!Q[i]) input.qfinal.emplace(i);
+    std::vector<bool> is_terminate(input.size());
+    for (int node : input.final_states) {
+        is_terminate[node] = 1;
+    }
+    input.final_states = {};
+    for (int node = 0; node < is_terminate.size(); node++) {
+        if (!is_terminate[node]) {
+            input.final_states.emplace(node);
+        }
+    }
 
     input.serialize();
 }

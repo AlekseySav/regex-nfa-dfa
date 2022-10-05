@@ -5,19 +5,23 @@
 bool read_from_file;
 Automata input;
 
-bool run(int state, std::string_view s) {
-    for (auto it = s.begin(); it != s.end(); ++it) {
-        auto& v = input.nodes[state][chrid(*it)];
-        if (!v.size()) return false;
-        for (int to : input.nodes[state][0])
-            if (run(to, it))
+bool run(int state, std::string_view line) {
+    for (auto it = line.begin(); it != line.end(); ++it) {
+        auto& to = input.nodes[state][char_id(*it)];
+        if (!to.size()) return false;
+        for (int to : input.nodes[state][0]) {
+            if (run(to, it)) {
                 return true;
-        for (int to : v)
-            if (run(to, it + 1))
+            }
+        }
+        for (int to : to) {
+            if (run(to, it + 1)) {
                 return true;
+            }
+        }
         return false;
     }
-    return input.qfinal.contains(state);
+    return input.final_states.contains(state);
 }
 
 int main(int argc, char** argv) {
@@ -25,8 +29,8 @@ int main(int argc, char** argv) {
 
     char** arg = &argv[1];
     while ((*arg)[0] == '-') {
-        for (char* c = *arg + 1; *c; c++) {
-            switch (*c) {
+        for (char* symbol = *arg + 1; *symbol; symbol++) {
+            switch (*symbol) {
                 case 'f': read_from_file = true; break;
                 default: std::cerr << "bad parameter\n"; break;
             }
@@ -37,14 +41,21 @@ int main(int argc, char** argv) {
     std::ifstream ifs;
     std::stringstream iss;
     std::string line;
-    if (read_from_file) ifs = std::ifstream(*arg);
-    else iss = std::stringstream(*arg);
+    if (read_from_file) {
+        ifs = std::ifstream(*arg);
+    }
+    else {
+        iss = std::stringstream(*arg);
+    }
     std::istream& is = read_from_file ? (std::istream&)ifs : (std::istream&)iss;
 
     while (std::getline(is, line)) {
-        if (line[0] == '/') continue;
-        if (run(input.q0, line))
+        if (line[0] == '/') {
+            continue;
+        }
+        if (run(input.entry_state, line)) {
             std::cout << line << ';';
+        }
     }
     std::cout << '\n';
 }

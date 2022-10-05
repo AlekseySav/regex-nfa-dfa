@@ -5,12 +5,12 @@ int main() {
     input.deserialize();
     int garbage = input.node();
     bool used = false;
-    for (int n = 0; n < input.size(); n++) {
-        auto& node = input.nodes[n];
-        for (int c = 0; c < input.max_literal; c++) {
-            if (!node[c].size() && c != chrid('\e')) {
-                node[c].emplace(garbage);
-                used = used || n != garbage;
+    for (int node_number = 0; node_number < input.size(); node_number++) {
+        auto& node = input.nodes[node_number];
+        for (int symbol = 0; symbol < input.max_literal; symbol++) {
+            if (!node[symbol].size() && symbol != char_id('\e')) {
+                node[symbol].emplace(garbage);
+                used = used || node_number != garbage;
             }
         }
     }

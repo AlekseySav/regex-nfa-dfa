@@ -14,27 +14,39 @@ void do_assert(const char* name, bool cond) {
 bool is_nfa() { return true; }
 
 bool is_1nfa() {
-    for (auto& n : input.nodes)
-        if (n[0].size())
+    for (auto& node : input.nodes) {
+        if (node[0].size()) {
             return false;
+        }
+    }
     return true;
 }
 
 bool is_dfa() {
-    if (!is_1nfa()) return false;
-    for (auto& n : input.nodes)
-        for (auto&[c, to] : n)
-            if (to.size() > 1)
+    if (!is_1nfa()) {
+        return false;
+    }
+    for (auto& node : input.nodes) {
+        for (auto&[symbol, to] : node) {
+            if (to.size() > 1) {
                 return false;
+            }
+        }
+    }
     return true;
 }
 
 bool is_cdfa() {
-    if (!is_dfa()) return false;
-    for (auto& n : input.nodes)
-        for (int c = 1; c < input.max_literal; c++)
-            if (n[c].size() != 1)
+    if (!is_dfa()) {
+        return false;
+    }
+    for (auto& node : input.nodes) {
+        for (int symbol = 1; symbol < input.max_literal; symbol++) {
+            if (node[symbol].size() != 1) {
                 return false;
+            }
+        }
+    }
     return true;
 }
 

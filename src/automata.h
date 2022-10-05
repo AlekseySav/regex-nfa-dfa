@@ -25,47 +25,48 @@ public:
     void deserialize(std::istream& is = std::cin);
 
     /* move last node to n node */
-    void remove_node(int n) {
+    void remove_node(int node) {
         int last = size() - 1;
-        std::swap(nodes[last], nodes[n]);
+        std::swap(nodes[last], nodes[node]);
         for (int i = 0; i < size(); i++) {
-            for (auto&[c, to] : nodes[i]) {
+            for (auto&[symbol, to] : nodes[i]) {
                 if (to.find(last) != to.end()) {
                     to.erase(last);
-                    to.emplace(n);
+                    to.emplace(node);
                 }
             }
         }
         nodes.pop_back();
-        if (q0 == last) q0 = n;
-        if (qfinal.contains(n)) qfinal.erase(n);
-        if (qfinal.contains(last)) qfinal.erase(last), qfinal.emplace(n);
+        if (entry_state == last) entry_state = node;
+        if (final_states.contains(node)) final_states.erase(node);
+        if (final_states.contains(last)) final_states.erase(last), final_states.emplace(node);
     }
 
-    void edge(int from, int to, int c) { nodes[from][c].emplace(to); }
-    void edge(int from, int to) { edge(from, to, chrid('\e')); }
+    void edge(int from, int to, int symbol) { nodes[from][symbol].emplace(to); }
+    void edge(int from, int to) { edge(from, to, char_id('\e')); }
 
 
     int node() {
-        int n = nodes.size();
+        int node = nodes.size();
         nodes.emplace_back();
-        return n;
+        return node;
     }
 
-    int node(int n, int c) {
-        int x = node();
-        edge(n, x, c);
-        return x;
+    int node(int node_number, int symbol) {
+        int new_node = node();
+        edge(node_number, new_node, symbol);
+        return new_node;
     }
 
-    int node(int n) { return node(n, chrid('\e')); }
+    int node(int node_number) { return node(node_number, char_id('\e')); }
     int size() const { return nodes.size(); }
 
-    std::vector<int> get_edges(int i, int j) const {
+    std::vector<int> get_edges(int from, int to) const {
         std::vector<int> res;
-        for (auto&[c, v] : nodes[i]) {
-            if (std::find(v.begin(), v.end(), j) != v.end())
-                res.push_back(c);
+        for (auto&[symbol, outgoing_edges] : nodes[from]) {
+            if (std::find(outgoing_edges.begin(), outgoing_edges.end(), to) != outgoing_edges.end()) {
+                res.push_back(symbol);
+            }
         }
         return res;
     }
@@ -73,52 +74,61 @@ public:
     std::vector<bool> get_reachable_nodes() const {
         std::vector<bool> used(size());
         std::function<void(int)> dfs;
-        dfs = [&used, &dfs, this](int n) {
-            if (used[n]) return;
-            used[n] = true;
-            for (auto&[c, to] : nodes[n])
-                for (int i : to)
+        dfs = [&used, &dfs, this](int node_number) {
+            if (used[node_number]) return;
+            used[node_number] = true;
+            for (auto&[symbol, to] : nodes[node_number]) {
+                for (int i : to) {
                     dfs(i);
+                }
+            }
         };
-        dfs(q0);
+        dfs(entry_state);
         return used;
     }
 
 public:
     edges_t nodes;
-    std::unordered_set<int> qfinal;
-    int q0;
+    std::unordered_set<int> final_states;
+    int entry_state;
     int max_literal;
 };
 
 void Automata::serialize() {
-    std::cout << nodes.size() << '\n' << q0 << '\n' << qfinal.size() << '\n';
-    for (auto i : qfinal)
+    std::cout << nodes.size() << '\n' << entry_state << '\n' << final_states.size() << '\n';
+    for (auto i : final_states)
         std::cout << i << ' ';
     std::cout << '\n';
-    for (int i = 0; i < nodes.size(); i++)
-        for (auto&[c, to] : nodes[i])
-            for (int j : to)
-                std::cout << i << ' ' << j << ' ' << c << '\n';
+    for (int from = 0; from < nodes.size(); from++) {
+        for (auto&[symbol, outgoing_edges] : nodes[from]) {
+            for (int to : outgoing_edges) {
+                std::cout << from << ' ' << to << ' ' << symbol << '\n';
+            }
+        }
+    }
     std::cout << "0 0 0\n";
 }
 
 void Automata::deserialize(std::istream& is) {
-    int n_nodes, n_finals, i, j, c;
-    is >> n_nodes >> q0 >> n_finals;
+    int n_nodes, n_finals, from, to, symbol;
+    is >> n_nodes >> entry_state >> n_finals;
     nodes.resize(n_nodes);
     while (n_finals--) {
-        is >> i;
-        qfinal.emplace(i);
+        is >> to;
+        final_states.emplace(to);
     }
     for (;;) {
-        is >> i >> j >> c;
-        if (!i && !j && !c) break;
-        if (c == -1) {
-            while ((c = is.get()) != '\'');
-            c = chrid(is.get());
+        is >> from >> to >> symbol;
+        if (!from && !to && !symbol) {
+            break;
         }
-        max_literal = max_literal > c + 1 ? max_literal : c + 1;
-        nodes[i][c].emplace(j);
+        if (symbol == -1) {
+            while (symbol != '\'') {
+                symbol = is.get();
+            }
+            symbol = char_id(is.get());
+        }
+        max_literal = max_literal > symbol + 1 ? max_literal : symbol + 1;
+        nodes[from][symbol].emplace(to);
     }
 }

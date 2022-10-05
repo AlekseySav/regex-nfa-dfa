@@ -5,11 +5,11 @@
 import sys
 from itertools import zip_longest as zip
 
-s = input()
+test_string = input()
 failed = False
 
-for index, (i, j) in enumerate(zip(s, sys.argv[1])):
+for index, (i, j) in enumerate(zip(test_string, sys.argv[1])):
     failed = failed or i != j
 
 if failed:
-    print(f'failed\nexpected:\t"{sys.argv[1]}"\ngot:\t\t"{s}"', file=sys.stderr)
+    print(f'failed\nexpected:\t"{sys.argv[1]}"\ngot:\t\t"{test_string}"', file=sys.stderr)

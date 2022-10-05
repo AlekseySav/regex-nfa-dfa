@@ -7,77 +7,102 @@ static std::vector<bool> deleted_nodes;
 static Automata input;
 
 bool has_operator(const std::string& s, char op) {
-    int depht = 0;
-    for (char c : s) {
-        if (c == '(') depht++;
-        else if (c == ')') depht--;
-        else if (c == op && !depht) return true;
+    int depth = 0;
+    for (char symbol : s) {
+        if (symbol == '(') {
+            depth++;
+        }
+        else if (symbol == ')') {
+            depth--;
+        }
+        else if (symbol == op && !depth) {
+            return true;
+        }
     }
     return false;
 }
 
 std::string star(std::string input) {
-    if (has_operator(input, '.') || has_operator(input, '+'))
+    if (has_operator(input, '.') || has_operator(input, '+')) {
         input = '(' + input + ')'; 
+    }
     return input.size() ? input + '*' : input;
 }
 
-std::string cat(std::string input, std::string b) {
-    if (has_operator(input, '+') && b.size()) input = '(' + input + ')';
-    if (has_operator(b, '+') && input.size()) b = '(' + b + ')';
-    if (input.size() && b.size()) return input + '.' + b;
-    return input + b;
+std::string cat(std::string input, std::string append) {
+    if (has_operator(input, '+') && append.size()) {
+        input = '(' + input + ')';
+    }
+    if (has_operator(append, '+') && input.size()) {
+        append = '(' + append + ')';
+    }
+    if (input.size() && append.size()) {
+        return input + '.' + append;
+    }
+    return input + append;
 }
 
-void add(std::string& input, const std::string& b) {
-    if (input.size() && b.size()) input += "+";
-    input += b;
+void add(std::string& input, const std::string& append) {
+    if (input.size() && append.size()) {
+        input += "+";
+    }
+    input += append;
 }
 
-void delete_node(int n) {
-    for (auto[prev, in_re] : inv_edges[n]) {
-        if (prev == n || deleted_nodes[prev]) continue;
-        for (auto[next, out_re] : edges[n]) {
-            if (next == n || deleted_nodes[next]) continue; 
-            auto re = cat(cat(in_re, star(edges[n][n])), out_re);
+void delete_node(int node) {
+    for (auto[prev, in_re] : inv_edges[node]) {
+        if (prev == node || deleted_nodes[prev]) {
+            continue;
+        }
+        for (auto[next, out_re] : edges[node]) {
+            if (next == node || deleted_nodes[next]) {
+                continue;
+            } 
+            auto re = cat(cat(in_re, star(edges[node][node])), out_re);
             add(edges[prev][next], re);
             add(inv_edges[next][prev], re);
         }
     }
-    deleted_nodes[n] = true;
+    deleted_nodes[node] = true;
+}
+
+void add_temp_nodes() {
+    int temp_node = input.node();
+    input.edge(temp_node, input.entry_state);
+    input.entry_state = temp_node;
+    temp_node = input.node();
+    for (int final : input.final_states) {
+        input.edge(final, temp_node);
+    }
+    input.final_states = {temp_node};
 }
 
 int main() {
     input.deserialize();
-
-    int t = input.node();
-    input.edge(t, input.q0);
-    input.q0 = t;
-    t = input.node();
-    for (int i : input.qfinal)
-        input.edge(i, t);
-    input.qfinal = {t};
+    add_temp_nodes();
 
     edges.resize(input.size());
     inv_edges.resize(input.size());
     deleted_nodes.resize(input.size());
     
-    for (int n = 0; n < input.size(); n++) {
-        for (auto&[c, set] : input.nodes[n]) {
-            for (int v : set) {
-                add(edges[n][v], c ? std::string(1, alpha(c)) : "0");
-                add(inv_edges[v][n], c ? std::string(1, alpha(c)) : "0");
+    for (int node = 0; node < input.size(); node++) {
+        for (auto&[symbol, set] : input.nodes[node]) {
+            for (int to : set) {
+                add(edges[node][to], symbol ? std::string(1, alpha(symbol)) : "0");
+                add(inv_edges[to][node], symbol ? std::string(1, alpha(symbol)) : "0");
             }
         }
-        if (!edges[n].contains(n)) {
-            inv_edges[n].emplace(n, "");
-            edges[n].emplace(n, "");
+        if (!edges[node].contains(node)) {
+            inv_edges[node].emplace(node, "");
+            edges[node].emplace(node, "");
         }
     }
 
-    for (int n = 0; n < input.size(); n++)
-        if (n != input.q0 && !input.qfinal.contains(n))
-            delete_node(n);
+    for (int node = 0; node < input.size(); node++) {
+        if (node != input.entry_state && !input.final_states.contains(node)) {
+            delete_node(node);
+        }
+    }
 
-    std::cout << edges[input.q0][*input.qfinal.begin()] << '\n';
+    std::cout << edges[input.entry_state][*input.final_states.begin()] << '\n';
 }

@@ -19,5 +19,5 @@ inline const char alpha_to_id[] = {{ {", ".join(map(str, alpha_to_id))} }};
 
 const int W = {len(id_to_alpha)};
 #define alpha(c) (id_to_alpha[(c)])
-#define chrid(c) (alpha_to_id[(c)])
+#define char_id(c) (alpha_to_id[(c)])
 ''', file=f)
