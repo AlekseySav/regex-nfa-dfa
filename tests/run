@@ -36,9 +36,7 @@ do_file() {
         ext $1
     else
         echo $1... >&2
-        if [[ $1 != 'tests/run-regex/07-makere' ]]; then # very slow :(
-            eval $command
-        fi
+        eval $command
     fi
 }
 

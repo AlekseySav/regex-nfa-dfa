@@ -67,3 +67,5 @@ to reset default alphabet run
 - ```dfa-cdfa```
 - ```cdfa-inv```
 - ```re-nfa```
+- ```cdfa-min```
+- ```cdfa-re```

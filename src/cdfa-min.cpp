@@ -28,7 +28,7 @@ std::vector<std::vector<bool>> build_table() {
     while (!queue.empty()) {
         auto[u, v] = queue.front();
         queue.pop();
-        for (int c = 0; c < W; c++) {
+        for (int c = 0; c < input.max_literal; c++) {
             for (int r : inverted[u][c]) {
                 for (int s : inverted[v][c]) {
                     if (!marked[r][s]) {
@@ -54,10 +54,6 @@ int main() {
     input.deserialize();
     auto marked = build_table();
     std::vector<int> component(input.size(), -1);
-    for (int i = 0; i < input.size(); i++)
-        if (!marked[input.size() - 1][i])
-            component[i] = 0;
-
     used.resize(input.size());
     access_dfs(input.q0);
 

@@ -1,15 +1,6 @@
 #include "automata.h"
 #include <algorithm>
 
-static std::vector<int> get_edges(const Automata& a, int i, int j) {
-    std::vector<int> res;
-    for (auto&[c, v] : a.nodes[i]) {
-        if (std::find(v.begin(), v.end(), j) != v.end())
-            res.push_back(c);
-    }
-    return res;
-}
-
 char color_hint(const Automata& a, int i, int j) {
     char c = 0;
     if (a.q0 == i) c |= 1;
@@ -35,7 +26,7 @@ static void print(const Automata& a) {
         std::vector<std::vector<int>> chains;
         print_char(i + '0', color_hint(a, i, -1));
         for (int j = 0; j < a.size(); j++) {
-            auto v = get_edges(a, i, j);
+            auto v = a.get_edges(i, j);
             if (v.size() > 1) {
                 print_char('*', color_hint(a, i, j));
                 chains.push_back(v);

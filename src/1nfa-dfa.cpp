@@ -25,7 +25,7 @@ void tompson_bfs() {
     while (queue.size()) {
         int id_from = queue.front();
         queue.pop();
-        for (int c = 0; c < W; c++) {
+        for (int c = 0; c < input.max_literal; c++) {
             const state& from = o_list[id_from];
             state to;
             for (int i : from) to.merge(state(input.nodes[i][c]));

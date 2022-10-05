@@ -32,7 +32,7 @@ bool is_dfa() {
 bool is_cdfa() {
     if (!is_dfa()) return false;
     for (auto& n : a.nodes)
-        for (int c = 1; c < W; c++)
+        for (int c = 1; c < a.max_literal; c++)
             if (n[c].size() != 1)
                 return false;
     return true;

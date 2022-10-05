@@ -12,6 +12,11 @@ $ tools/input "%{in-1}" | ./1nfa-dfa | ./dfa-cdfa | ./run "%{str-1}" | tools/cmp
 $ tools/input "%{in-2}" | ./1nfa-dfa | ./dfa-cdfa | ./run "%{str-2}" | tools/cmp ";ab;aba;abab;ababa;ababab;"
 $ tools/input "%{in-3}" | ./1nfa-dfa | ./dfa-cdfa | ./run "%{str-3}" | tools/cmp "abab;aba;abababa;abab;aba;a;"
 
+/ making CDFA from CDFA should not change anything
+$ tools/input "%{in-1}" | ./1nfa-dfa | ./dfa-cdfa | ./dfa-cdfa | ./cmp-nfa "$(tools/input "%{in-1}" | ./1nfa-dfa | ./dfa-cdfa)"
+$ tools/input "%{in-2}" | ./1nfa-dfa | ./dfa-cdfa | ./dfa-cdfa | ./cmp-nfa "$(tools/input "%{in-2}" | ./1nfa-dfa | ./dfa-cdfa)"
+$ tools/input "%{in-3}" | ./1nfa-dfa | ./dfa-cdfa | ./dfa-cdfa | ./cmp-nfa "$(tools/input "%{in-3}" | ./1nfa-dfa | ./dfa-cdfa)"
+
 # in-1
 q0: 4
 final: 2 3 4 7 2

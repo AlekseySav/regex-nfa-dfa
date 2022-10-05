@@ -59,10 +59,21 @@ public:
 
     int node(int n) { return node(n, chrid('\e')); }
     int size() const { return nodes.size(); }
+
+    std::vector<int> get_edges(int i, int j) const {
+        std::vector<int> res;
+        for (auto&[c, v] : nodes[i]) {
+            if (std::find(v.begin(), v.end(), j) != v.end())
+                res.push_back(c);
+        }
+        return res;
+    }
+
 public:
     edges_t nodes;
     std::unordered_set<int> qfinal;
     int q0;
+    int max_literal;
 };
 
 void Automata::serialize() {
@@ -92,6 +103,7 @@ void Automata::deserialize(std::istream& is) {
             while ((c = is.get()) != '\'');
             c = chrid(is.get());
         }
+        max_literal = max_literal > c + 1 ? max_literal : c + 1;
         nodes[i][c].emplace(j);
     }
 }

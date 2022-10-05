@@ -26,12 +26,14 @@ int main() {
         reg.RegisterNodeAttr(nodes[i], Attrs_shape, "doublecircle");
 
     for (int from = 0; from < a.size(); from++) {
-        for (auto&[c, set] : a.nodes[from]) {
-            for (int to : set) {
-                edges.push_back(reg.RegisterEdge(nodes[from], nodes[to]));
-                reg.RegisterEdgeAttr(edges.back(), Attrs_label, std::string(1, c ? alpha(c) : 'e'));
-                if (!c) reg.RegisterEdgeAttr(edges.back(), Attrs_fontcolor, "blue");
-            }
+        for (int to = 0; to < a.size(); to++) {
+            auto e = a.get_edges(from, to);
+            if (!e.size()) continue;
+            std::string label;
+            for (int c : e)
+                label += (label.size() ? "," : "") + (c ? std::string(1, alpha(c)) : "eps");
+            edges.push_back(reg.RegisterEdge(nodes[from], nodes[to]));
+            reg.RegisterEdgeAttr(edges.back(), Attrs_label, label);
         }
     }
     for (size_t i : nodes)
