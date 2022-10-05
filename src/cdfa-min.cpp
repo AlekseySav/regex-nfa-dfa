@@ -42,20 +42,11 @@ std::vector<std::vector<bool>> build_table() {
     return marked;
 }
 
-void access_dfs(int n) {
-    if (used[n]) return;
-    used[n] = true;
-    for (auto&[c, to] : input.nodes[n])
-        for (int i : to)
-            access_dfs(i);
-}
-
 int main() {
     input.deserialize();
     auto marked = build_table();
     std::vector<int> component(input.size(), -1);
-    used.resize(input.size());
-    access_dfs(input.q0);
+    used = input.get_reachable_nodes();
 
     int n_components = 0;
     for (int i = 0; i < input.size(); i++) {

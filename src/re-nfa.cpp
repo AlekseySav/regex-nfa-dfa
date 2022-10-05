@@ -8,13 +8,13 @@ struct Slice {
 
 static Automata a;
 
-static struct Slice from_literal(char c) {
+static struct Slice slice_from_literal(char c) {
     int b = a.node();
     int e = a.node(b, c == '0' ? chrid('\e') : chrid(c));
     return { b, e };
 }
 
-static void apply(char c, Slice* m, Slice ex) {
+static void slice_from_operator(char c, Slice* m, Slice ex) {
     int tmp;
     switch (c) {
         case '*':
@@ -43,15 +43,15 @@ static Slice compile(char e = '\n') {
     while ((c = std::cin.get()) != e) {
         switch (c) {
             case '.': break;
-            case '*': apply('*', &sub.top(), {}); break;
+            case '*': slice_from_operator('*', &sub.top(), {}); break;
             case '+':
                 while (--n_dots) {
                     Slice m = sub.top(); sub.pop();
-                    apply('.', &sub.top(), m);
+                    slice_from_operator('.', &sub.top(), m);
                 }
                 break;
             default:
-                sub.push(c == '(' ? compile(')') : from_literal(c));
+                sub.push(c == '(' ? compile(')') : slice_from_literal(c));
                 n_dots++; /* implicit dot */
                 break;
         }
@@ -59,7 +59,7 @@ static Slice compile(char e = '\n') {
     n_dots--;
     while (sub.size() > 1) {
         Slice m = sub.top(); sub.pop();
-        apply(n_dots ? (n_dots--, '.') : '+', &sub.top(), m);
+        slice_from_operator(n_dots ? (n_dots--, '.') : '+', &sub.top(), m);
     }
     return sub.top();
 }

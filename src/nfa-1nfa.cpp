@@ -15,14 +15,6 @@ void chain_dfs(int p, int n) {
                 a.edge(p, i, c);
 }
 
-void access_dfs(int n) {
-    if (used[n]) return;
-    used[n] = true;
-    for (auto&[c, to] : a.nodes[n])
-        for (int i : to)
-            access_dfs(i);
-}
-
 int main(int argc, char** argv) {
     a.deserialize();
 
@@ -35,7 +27,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < a.size(); i++)
         a.nodes[i][chrid('\e')].clear();
 
-    access_dfs(a.q0);
+    used = a.get_reachable_nodes();
     for (int i = a.size() - 1; i >= 0; i--)
         if (!used[i])
             a.remove_node(i);

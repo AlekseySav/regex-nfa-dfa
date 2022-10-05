@@ -13,17 +13,18 @@
 #include <iostream>
 #include <algorithm>
 #include <unordered_set>
+#include <functional>
 
 #include "../alphabet.h"
 
-struct Automata {
+class Automata {
 public:
     using edges_t = std::vector<std::unordered_map<int, std::unordered_set<int>>>;
 
     void serialize();
     void deserialize(std::istream& is = std::cin);
 
-    /* copy last node to n node */
+    /* move last node to n node */
     void remove_node(int n) {
         int last = size() - 1;
         std::swap(nodes[last], nodes[n]);
@@ -67,6 +68,20 @@ public:
                 res.push_back(c);
         }
         return res;
+    }
+
+    std::vector<bool> get_reachable_nodes() const {
+        std::vector<bool> used(size());
+        std::function<void(int)> dfs;
+        dfs = [&used, &dfs, this](int n) {
+            if (used[n]) return;
+            used[n] = true;
+            for (auto&[c, to] : nodes[n])
+                for (int i : to)
+                    dfs(i);
+        };
+        dfs(q0);
+        return used;
     }
 
 public:

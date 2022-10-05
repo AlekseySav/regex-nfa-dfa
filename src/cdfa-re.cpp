@@ -42,8 +42,6 @@ void delete_node(int n) {
             auto re = cat(cat(in_re, star(edges[n][n])), out_re);
             add(edges[prev][next], re);
             add(inv_edges[next][prev], re);
-            //std::cerr << prev+1 << "->" << next+1 << "   " << edges[prev][next] << '\n';
-            // std::cerr << n+1 << "->" << next+1 << "   " << edges[n][next] << '\n';
         }
     }
     deleted_nodes[n] = true;
