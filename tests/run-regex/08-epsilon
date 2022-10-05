@@ -1,4 +1,4 @@
-/ echo "0" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./dfa-run s %{this} | tools/cmp ";"
+/ echo "0" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./run -f %{this} | tools/cmp ";"
 / (only empty line is ok)
 
 a

@@ -7,11 +7,15 @@ $ ./input "%{in-3}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-3}\")"
 $ ./input "%{in-4}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-4}\")"
 $ ./input "%{in-5}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-5}\")"
 
-/ input is not dfa
-/ dfa-run asserts that input is DFA, so only need to ckeck if output is same
-$ ./input "%{in-6}" | ./1nfa-dfa | ./dfa-run "%{str-6}" | tools/cmp "$(./input \"%{in-6}\" | ./nfa-run \"%{str-6}\")"
-$ ./input "%{in-7}" | ./1nfa-dfa | ./dfa-run "%{str-7}" | tools/cmp ";ab;aba;abab;ababa;ababab;"
-$ ./input "%{in-8}" | ./1nfa-dfa | ./dfa-run "%{str-8}" | tools/cmp "abab;aba;abababa;abab;aba;a;"
+/ check if we at least built DFA
+$ ./input "%{in-6}" | ./1nfa-dfa | ./is dfa
+$ ./input "%{in-7}" | ./1nfa-dfa | ./is dfa
+$ ./input "%{in-8}" | ./1nfa-dfa | ./is dfa
+
+/ check if dfa is correct
+$ ./input "%{in-6}" | ./1nfa-dfa | ./run "%{str-6}" | tools/cmp "$(./input \"%{in-6}\" | ./run \"%{str-6}\")"
+$ ./input "%{in-7}" | ./1nfa-dfa | ./run "%{str-7}" | tools/cmp ";ab;aba;abab;ababa;ababab;"
+$ ./input "%{in-8}" | ./1nfa-dfa | ./run "%{str-8}" | tools/cmp "abab;aba;abababa;abab;aba;a;"
 
 # in-1
 q0: 1

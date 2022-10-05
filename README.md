@@ -23,7 +23,7 @@ all subtasks are presented as separate programs
 - ```trace```               &mdash; nicely print automata
 - ```draw```                &mdash; convert automata to graphviz
 - ```cmp-nfa <nfa>```       &mdash; compare NFA from stdin with NFA from argv[1]
-- ```dfa-run <file>```      &mdash; based on DFA/CDFA performs search through each line in file
+- ```run [-f] <src>```      &mdash; run NFA on each line in file or string, depending on ```-f``` flag 
 
 ### note
 
@@ -34,7 +34,7 @@ for example:
 ```$ echo $regex | re-nfa | trace```
     will build NFA from ```$regex``` and print it
 
-```$ echo $regex | re-nfa | nfa-1nfa | 1nfa-dfa | dfa-cdfa | dfa-run 1.txt```
+```$ echo $regex | re-nfa | nfa-1nfa | 1nfa-dfa | dfa-cdfa | run -f 1.txt```
     will build CDFA base on ```$regex``` and run it for each line in ```1.txt```
 
 ## customizations
@@ -52,8 +52,10 @@ to reset default alphabet run
 ```$ make clean all```
 
 ## tests
+```make test [test-only="name..."]``` &mdash; run tests, specified by test-only, or all tests if test-only is undefined
 
-in progress....
-
-## dependencies
-- ```dot```
+### currently present tests:
+- ```cmp-nfa```
+- ```nfa-1nfa```
+- ```1nfa-dfa```
+- ```dfa-cdfa```

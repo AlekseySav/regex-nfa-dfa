@@ -3,15 +3,15 @@
 / not sure if we really need to check dfa-cdfa conversion, as it's very simple
 /$
 
-/ verify we still got valid dfa
-$ ./input "%{in-1}" | ./1nfa-dfa | ./dfa-cdfa | ./dfa-run "%{str-1}" | tools/cmp "$(./input \"%{in-1}\" | ./nfa-run \"%{str-1}\")"
-$ ./input "%{in-2}" | ./1nfa-dfa | ./dfa-cdfa | ./dfa-run "%{str-2}" | tools/cmp ";ab;aba;abab;ababa;ababab;"
-$ ./input "%{in-3}" | ./1nfa-dfa | ./dfa-cdfa | ./dfa-run "%{str-3}" | tools/cmp "abab;aba;abababa;abab;aba;a;"
-
-/ verify it's cdfa
+/ verify it's CDFA
 $ ./input "%{in-1}" | ./1nfa-dfa | ./dfa-cdfa | ./is cdfa
 $ ./input "%{in-2}" | ./1nfa-dfa | ./dfa-cdfa | ./is cdfa
 $ ./input "%{in-3}" | ./1nfa-dfa | ./dfa-cdfa | ./is cdfa
+
+/ verify we still got valid DFA
+$ ./input "%{in-1}" | ./1nfa-dfa | ./dfa-cdfa | ./run "%{str-1}" | tools/cmp "$(./input \"%{in-1}\" | ./run \"%{str-1}\")"
+$ ./input "%{in-2}" | ./1nfa-dfa | ./dfa-cdfa | ./run "%{str-2}" | tools/cmp ";ab;aba;abab;ababa;ababab;"
+$ ./input "%{in-3}" | ./1nfa-dfa | ./dfa-cdfa | ./run "%{str-3}" | tools/cmp "abab;aba;abababa;abab;aba;a;"
 
 # in-1
 q0: 4

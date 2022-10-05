@@ -1,4 +1,4 @@
-/ echo "(a*.bc.(x+y)).ea+b+cde.qwer+(x.y)+z" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inv | ./dfa-run s %{this} | tools/cmp ";aaaabcxyea;aaaabcxa;aaaacxa;bacxea;abacxea;abcaxea;a;x;y;xyz;axy;aea;zz;zzxy;"
+/ echo "(a*.bc.(x+y)).ea+b+cde.qwer+(x.y)+z" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inv | ./run -f %{this} | tools/cmp ";aaaabcxyea;aaaabcxa;aaaacxa;bacxea;abacxea;abcaxea;a;x;y;xyz;axy;aea;zz;zzxy;"
 
 aaaabcxea
 aaaabcxyea
