@@ -1,0 +1,73 @@
+/$
+
+/ input has no epsilon-edges, no unaccessable nodes
+$ echo "%{re-1}" | ./re-nfa | ./cmp-nfa "$(tools/input \"%{nfa-1}\")"
+$ echo "%{re-2}" | ./re-nfa | ./cmp-nfa "$(tools/input \"%{nfa-2}\")"
+$ echo "%{re-3}" | ./re-nfa | ./cmp-nfa "$(tools/input \"%{nfa-3}\")"
+
+# re-1
+abc+0
+
+# nfa-1
+q0: 9
+final: 10
+1: a->2
+2: eps->3
+3: b->4
+4: eps->5
+5: c->6
+6: eps->10
+7: eps->8
+8: eps->10
+9: eps->1 eps->7
+10:
+
+# re-2
+ab(c+d)e*f*(a+b)*
+
+# nfa-2
+q0: 1
+final: 23
+1: a->2
+2: eps->3
+3: b->4
+4: eps->9
+9: eps->5 eps->7
+5: c->6
+7: d->8
+6: eps->10
+8: eps->10
+10: eps->13
+13: eps->11 eps->16
+11: e->12
+12: eps->13
+16: eps->14 eps->23
+14: f->15
+15: eps->16
+23: eps->21
+21: eps->17 eps->19
+17: a->18
+19: b->20
+18: eps->22
+20: eps->22
+22: eps->23
+
+# re-3
+(ab+aba)*
+
+# nfa-3
+q0: 13
+final: 13
+13: eps->11
+11: eps->1 eps->5
+1: a->2
+2: eps->3
+3: b->4
+4: eps->12
+5: a->6
+6: eps->7
+7: b->8
+8: eps->9
+9: a->10
+10: eps->12
+12: eps->13

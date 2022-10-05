@@ -1,19 +1,19 @@
 /$
 
 / input has no epsilon-edges, no unaccessable nodes
-$ ./input "%{in-1}" | ./nfa-1nfa | ./cmp-nfa "$(./input \"%{in-1}\")"
-$ ./input "%{in-2}" | ./nfa-1nfa | ./cmp-nfa "$(./input \"%{in-2}\")"
+$ tools/input "%{in-1}" | ./nfa-1nfa | ./cmp-nfa "$(tools/input \"%{in-1}\")"
+$ tools/input "%{in-2}" | ./nfa-1nfa | ./cmp-nfa "$(tools/input \"%{in-2}\")"
 
 / input has unaccessable nodes
-$ ./input "%{in-3}" | ./nfa-1nfa | ./cmp-nfa "$(./input \"%{out-3}\")"
+$ tools/input "%{in-3}" | ./nfa-1nfa | ./cmp-nfa "$(tools/input \"%{out-3}\")"
 
 / input has epsilon-edges
-$ ./input "%{in-4}" | ./nfa-1nfa | ./cmp-nfa "$(./input \"%{out-4}\")"
-$ ./input "%{in-5}" | ./nfa-1nfa | ./cmp-nfa "$(./input \"%{out-5}\")"
-$ ./input "%{in-6}" | ./nfa-1nfa | ./cmp-nfa "$(./input \"%{out-6}\")"
-$ ./input "%{in-7}" | ./nfa-1nfa | ./cmp-nfa "$(./input \"%{out-7}\")"
+$ tools/input "%{in-4}" | ./nfa-1nfa | ./cmp-nfa "$(tools/input \"%{out-4}\")"
+$ tools/input "%{in-5}" | ./nfa-1nfa | ./cmp-nfa "$(tools/input \"%{out-5}\")"
+$ tools/input "%{in-6}" | ./nfa-1nfa | ./cmp-nfa "$(tools/input \"%{out-6}\")"
+$ tools/input "%{in-7}" | ./nfa-1nfa | ./cmp-nfa "$(tools/input \"%{out-7}\")"
 
-$ ./input "%{in-8}" | ./nfa-1nfa | ./cmp-nfa "$(./input \"%{out-8}\")"
+$ tools/input "%{in-8}" | ./nfa-1nfa | ./cmp-nfa "$(tools/input \"%{out-8}\")"
 
 # in-1
 q0: 1

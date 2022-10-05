@@ -19,11 +19,16 @@ all subtasks are presented as separate programs
 #### ones that improve debugging and quality of life:
 
 - ```is <type>...```        &mdash; check if NFA is type=[nfa,1nfa,dfa,cdfa] 
-- ```input```               &mdash; read NFA
 - ```trace```               &mdash; nicely print automata
 - ```draw```                &mdash; convert automata to graphviz
 - ```cmp-nfa <nfa>```       &mdash; compare NFA from stdin with NFA from argv[1]
 - ```run [-f] <src>```      &mdash; run NFA on each line in file or string, depending on ```-f``` flag 
+
+### scripts:
+
+- ```tools/cmp <line>```    &mdash; compare line from stdin and line from argv[1]
+- ```tools/input```         &mdash; read NFA
+- ```tools/isempty```       &mdash; assert stdin is not empty
 
 ### note
 
@@ -55,7 +60,10 @@ to reset default alphabet run
 ```make test [test-only="name..."]``` &mdash; run tests, specified by test-only, or all tests if test-only is undefined
 
 ### currently present tests:
+- ```run```
 - ```cmp-nfa```
 - ```nfa-1nfa```
 - ```1nfa-dfa```
 - ```dfa-cdfa```
+- ```cdfa-inv```
+- ```re-nfa```

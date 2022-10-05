@@ -1,21 +1,21 @@
 /$
 
 / input is dfa already
-$ ./input "%{in-1}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-1}\")"
-$ ./input "%{in-2}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-2}\")"
-$ ./input "%{in-3}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-3}\")"
-$ ./input "%{in-4}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-4}\")"
-$ ./input "%{in-5}" | ./1nfa-dfa | ./cmp-nfa "$(./input \"%{in-5}\")"
+$ tools/input "%{in-1}" | ./1nfa-dfa | ./cmp-nfa "$(tools/input \"%{in-1}\")"
+$ tools/input "%{in-2}" | ./1nfa-dfa | ./cmp-nfa "$(tools/input \"%{in-2}\")"
+$ tools/input "%{in-3}" | ./1nfa-dfa | ./cmp-nfa "$(tools/input \"%{in-3}\")"
+$ tools/input "%{in-4}" | ./1nfa-dfa | ./cmp-nfa "$(tools/input \"%{in-4}\")"
+$ tools/input "%{in-5}" | ./1nfa-dfa | ./cmp-nfa "$(tools/input \"%{in-5}\")"
 
 / check if we at least built DFA
-$ ./input "%{in-6}" | ./1nfa-dfa | ./is dfa
-$ ./input "%{in-7}" | ./1nfa-dfa | ./is dfa
-$ ./input "%{in-8}" | ./1nfa-dfa | ./is dfa
+$ tools/input "%{in-6}" | ./1nfa-dfa | ./is dfa
+$ tools/input "%{in-7}" | ./1nfa-dfa | ./is dfa
+$ tools/input "%{in-8}" | ./1nfa-dfa | ./is dfa
 
 / check if dfa is correct
-$ ./input "%{in-6}" | ./1nfa-dfa | ./run "%{str-6}" | tools/cmp "$(./input \"%{in-6}\" | ./run \"%{str-6}\")"
-$ ./input "%{in-7}" | ./1nfa-dfa | ./run "%{str-7}" | tools/cmp ";ab;aba;abab;ababa;ababab;"
-$ ./input "%{in-8}" | ./1nfa-dfa | ./run "%{str-8}" | tools/cmp "abab;aba;abababa;abab;aba;a;"
+$ tools/input "%{in-6}" | ./1nfa-dfa | ./run "%{str-6}" | tools/cmp "$(tools/input \"%{in-6}\" | ./run \"%{str-6}\")"
+$ tools/input "%{in-7}" | ./1nfa-dfa | ./run "%{str-7}" | tools/cmp ";ab;aba;abab;ababa;ababab;"
+$ tools/input "%{in-8}" | ./1nfa-dfa | ./run "%{str-8}" | tools/cmp "abab;aba;abababa;abab;aba;a;"
 
 # in-1
 q0: 1
@@ -101,6 +101,7 @@ final: 1 4 5
 1: a->2 a->6
 
 # str-7
+
 ab
 aba
 abab

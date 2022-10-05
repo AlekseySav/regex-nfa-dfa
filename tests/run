@@ -10,12 +10,13 @@ ext() {
             '/') ;;
             '#') curr_label=$(echo "${line:1}" | xargs);;
             '$') cmd+=("${line:1}");;
-            *  ) labels["$curr_label"]=$(echo ${labels["$curr_label"]}"\n$line");;
+            *  ) labels["$curr_label"]=$(echo ${labels["$curr_label"]}"$line\n");;
         esac
     done <$1
 
     for key in "${!labels[@]}"; do
         labels["$key"]=$(echo "${labels["$key"]}" | sed "s/\\\\n/%/g")
+        labels["$key"]=${labels["$key"]::-1}
     done
 
     for command in "${cmd[@]}"; do

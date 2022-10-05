@@ -5,25 +5,25 @@
 / out-x.y -- NFA equal to in-x, bad-x.y - NFA not equal to in-x
 
 / test equal NFA-s
-$ ./input "%{in-1}" | ./cmp-nfa "$(./input \"%{in-1}\")"
-$ ./input "%{in-2}" | ./cmp-nfa "$(./input \"%{in-2}\")"
-$ ./input "%{in-3}" | ./cmp-nfa "$(./input \"%{in-3}\")"
-$ ./input "%{in-1}" | ./cmp-nfa "$(./input \"%{out-1.1}\")"
-$ ./input "%{in-3}" | ./cmp-nfa "$(./input \"%{out-3.1}\")"
+$ tools/input "%{in-1}" | ./cmp-nfa "$(tools/input \"%{in-1}\")"
+$ tools/input "%{in-2}" | ./cmp-nfa "$(tools/input \"%{in-2}\")"
+$ tools/input "%{in-3}" | ./cmp-nfa "$(tools/input \"%{in-3}\")"
+$ tools/input "%{in-1}" | ./cmp-nfa "$(tools/input \"%{out-1.1}\")"
+$ tools/input "%{in-3}" | ./cmp-nfa "$(tools/input \"%{out-3.1}\")"
 
 / test unequal NFA-s
-$ ./input "%{in-1}" | ./cmp-nfa "$(./input \"%{in-2}\")" | tools/isempty
-$ ./input "%{in-1}" | ./cmp-nfa "$(./input \"%{in-3}\")" | tools/isempty
-$ ./input "%{in-2}" | ./cmp-nfa "$(./input \"%{in-3}\")" | tools/isempty
-$ ./input "%{in-1}" | ./cmp-nfa "$(./input \"%{bad-1.1}\")" | tools/isempty
-$ ./input "%{in-1}" | ./cmp-nfa "$(./input \"%{bad-1.2}\")" | tools/isempty
-$ ./input "%{in-1}" | ./cmp-nfa "$(./input \"%{bad-1.3}\")" | tools/isempty
-$ ./input "%{in-1}" | ./cmp-nfa "$(./input \"%{bad-1.4}\")" | tools/isempty
-$ ./input "%{in-3}" | ./cmp-nfa "$(./input \"%{bad-3.1}\")" | tools/isempty
-$ ./input "%{in-3}" | ./cmp-nfa "$(./input \"%{bad-3.2}\")" | tools/isempty
-$ ./input "%{in-3}" | ./cmp-nfa "$(./input \"%{bad-3.3}\")" | tools/isempty
-$ ./input "%{in-3}" | ./cmp-nfa "$(./input \"%{bad-3.4}\")" | tools/isempty
-$ ./input "%{in-3}" | ./cmp-nfa "$(./input \"%{bad-3.5}\")" | tools/isempty
+$ tools/input "%{in-1}" | ./cmp-nfa "$(tools/input \"%{in-2}\")" | tools/isempty
+$ tools/input "%{in-1}" | ./cmp-nfa "$(tools/input \"%{in-3}\")" | tools/isempty
+$ tools/input "%{in-2}" | ./cmp-nfa "$(tools/input \"%{in-3}\")" | tools/isempty
+$ tools/input "%{in-1}" | ./cmp-nfa "$(tools/input \"%{bad-1.1}\")" | tools/isempty
+$ tools/input "%{in-1}" | ./cmp-nfa "$(tools/input \"%{bad-1.2}\")" | tools/isempty
+$ tools/input "%{in-1}" | ./cmp-nfa "$(tools/input \"%{bad-1.3}\")" | tools/isempty
+$ tools/input "%{in-1}" | ./cmp-nfa "$(tools/input \"%{bad-1.4}\")" | tools/isempty
+$ tools/input "%{in-3}" | ./cmp-nfa "$(tools/input \"%{bad-3.1}\")" | tools/isempty
+$ tools/input "%{in-3}" | ./cmp-nfa "$(tools/input \"%{bad-3.2}\")" | tools/isempty
+$ tools/input "%{in-3}" | ./cmp-nfa "$(tools/input \"%{bad-3.3}\")" | tools/isempty
+$ tools/input "%{in-3}" | ./cmp-nfa "$(tools/input \"%{bad-3.4}\")" | tools/isempty
+$ tools/input "%{in-3}" | ./cmp-nfa "$(tools/input \"%{bad-3.5}\")" | tools/isempty
 
 # in-1
 q0: 1

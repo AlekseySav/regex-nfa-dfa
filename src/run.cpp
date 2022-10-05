@@ -9,6 +9,9 @@ bool run(int state, std::string_view s) {
     for (auto it = s.begin(); it != s.end(); ++it) {
         auto& v = a.nodes[state][chrid(*it)];
         if (!v.size()) return false;
+        for (int to : a.nodes[state][0])
+            if (run(to, it))
+                return true;
         for (int to : v)
             if (run(to, it + 1))
                 return true;
