@@ -6,11 +6,11 @@ struct Slice {
     int begin, end;
 };
 
-static Automata a;
+static Automata input;
 
 static struct Slice slice_from_literal(char c) {
-    int b = a.node();
-    int e = a.node(b, c == '0' ? chrid('\e') : chrid(c));
+    int b = input.node();
+    int e = input.node(b, c == '0' ? chrid('\e') : chrid(c));
     return { b, e };
 }
 
@@ -18,19 +18,19 @@ static void slice_from_operator(char c, Slice* m, Slice ex) {
     int tmp;
     switch (c) {
         case '*':
-            m->end = a.node(m->end);
-            a.edge(m->end, m->begin);
+            m->end = input.node(m->end);
+            input.edge(m->end, m->begin);
             m->begin = m->end;
             break;
         case '.':
-            a.edge(m->end, ex.begin);
+            input.edge(m->end, ex.begin);
             m->end = ex.end;
             break;
         case '+':
-            tmp = a.node();
-            a.edge(tmp, m->begin);
-            a.edge(tmp, ex.begin);
-            a.edge(ex.end, m->end = a.node(m->end));
+            tmp = input.node();
+            input.edge(tmp, m->begin);
+            input.edge(tmp, ex.begin);
+            input.edge(ex.end, m->end = input.node(m->end));
             m->begin = tmp;
             break;
     }
@@ -66,7 +66,7 @@ static Slice compile(char e = '\n') {
 
 int main(int argc, char** argv) {
     Slice s = compile();
-    a.q0 = s.begin;
-    a.qfinal.emplace(s.end);
-    a.serialize();
+    input.q0 = s.begin;
+    input.qfinal.emplace(s.end);
+    input.serialize();
 }

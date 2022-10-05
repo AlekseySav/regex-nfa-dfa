@@ -6,28 +6,28 @@
 using namespace Ubpa::UGraphviz;
 
 int main() {
-    Automata a;
-    a.deserialize();
+    Automata input;
+    input.deserialize();
 
     Graph graph("1", true);
     std::vector<size_t> nodes;
     std::vector<size_t> edges;
 
-    nodes.resize(a.size() + 1);
+    nodes.resize(input.size() + 1);
     auto& reg = graph.GetRegistry();
 
-    for (int i = 0; i < a.size(); i++)
+    for (int i = 0; i < input.size(); i++)
         nodes[i] = reg.RegisterNode(std::to_string(i + 1));
-    nodes[a.size()] = reg.RegisterNode("");
-    reg.RegisterNodeAttr(nodes[a.size()], Attrs_shape, "point");
-    edges.push_back(reg.RegisterEdge(nodes[a.size()], nodes[a.q0]));
+    nodes[input.size()] = reg.RegisterNode("");
+    reg.RegisterNodeAttr(nodes[input.size()], Attrs_shape, "point");
+    edges.push_back(reg.RegisterEdge(nodes[input.size()], nodes[input.q0]));
 
-    for (int i : a.qfinal)
+    for (int i : input.qfinal)
         reg.RegisterNodeAttr(nodes[i], Attrs_shape, "doublecircle");
 
-    for (int from = 0; from < a.size(); from++) {
-        for (int to = 0; to < a.size(); to++) {
-            auto e = a.get_edges(from, to);
+    for (int from = 0; from < input.size(); from++) {
+        for (int to = 0; to < input.size(); to++) {
+            auto e = input.get_edges(from, to);
             if (!e.size()) continue;
             std::string label;
             for (int c : e)

@@ -3,13 +3,13 @@
 #include <sstream>
 
 bool read_from_file;
-Automata a;
+Automata input;
 
 bool run(int state, std::string_view s) {
     for (auto it = s.begin(); it != s.end(); ++it) {
-        auto& v = a.nodes[state][chrid(*it)];
+        auto& v = input.nodes[state][chrid(*it)];
         if (!v.size()) return false;
-        for (int to : a.nodes[state][0])
+        for (int to : input.nodes[state][0])
             if (run(to, it))
                 return true;
         for (int to : v)
@@ -17,11 +17,11 @@ bool run(int state, std::string_view s) {
                 return true;
         return false;
     }
-    return a.qfinal.contains(state);
+    return input.qfinal.contains(state);
 }
 
 int main(int argc, char** argv) {
-    a.deserialize();
+    input.deserialize();
 
     char** arg = &argv[1];
     while ((*arg)[0] == '-') {
@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
 
     while (std::getline(is, line)) {
         if (line[0] == '/') continue;
-        if (run(a.q0, line))
+        if (run(input.q0, line))
             std::cout << line << ';';
     }
     std::cout << '\n';

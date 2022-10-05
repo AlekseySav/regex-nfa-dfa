@@ -1,15 +1,15 @@
 #include "automata.h"
 
 int main() {
-    Automata a;
-    a.deserialize();
+    Automata input;
+    input.deserialize();
 
-    std::vector<bool> Q(a.size());
-    for (int i : a.qfinal)
+    std::vector<bool> Q(input.size());
+    for (int i : input.qfinal)
         Q[i] = 1;
-    a.qfinal = {};
+    input.qfinal = {};
     for (int i = 0; i < Q.size(); i++)
-        if (!Q[i]) a.qfinal.emplace(i);
+        if (!Q[i]) input.qfinal.emplace(i);
 
-    a.serialize();
+    input.serialize();
 }

@@ -42,6 +42,20 @@ for example:
 ```$ echo $regex | re-nfa | nfa-1nfa | 1nfa-dfa | dfa-cdfa | run -f 1.txt```
     will build CDFA base on ```$regex``` and run it for each line in ```1.txt```
 
+### note 2: shortcut
+
+- ```shortcut``` &mdash; implicitly chains intermediate programs
+
+usage:
+
+```shortcut [-i] [-p] [-d] input-format output-format [input] [>output-file]```
+
+- `-i` &mdash; run `tools/input` to format input data
+- `-p` &mdash; run `./trace` for output data
+- `-d` &mdash; run `./draw | dot -Tpng` for output data
+- `i/o format` &mdash; `re` `nfa` `1nfa` `dfa` `cdfa` `min` `re`
+- `input` &mdash; if specified, used as input data, overwise stdin is used
+
 ## customizations
 
 it's possible to change alphabet with

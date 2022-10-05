@@ -4,7 +4,7 @@ static std::vector<std::unordered_map<int, std::string>> edges;
 static std::vector<std::unordered_map<int, std::string>> inv_edges;
 static std::vector<bool> deleted_nodes;
 
-static Automata a;
+static Automata input;
 
 bool has_operator(const std::string& s, char op) {
     int depht = 0;
@@ -16,22 +16,22 @@ bool has_operator(const std::string& s, char op) {
     return false;
 }
 
-std::string star(std::string a) {
-    if (has_operator(a, '.') || has_operator(a, '+'))
-        a = '(' + a + ')'; 
-    return a.size() ? a + '*' : a;
+std::string star(std::string input) {
+    if (has_operator(input, '.') || has_operator(input, '+'))
+        input = '(' + input + ')'; 
+    return input.size() ? input + '*' : input;
 }
 
-std::string cat(std::string a, std::string b) {
-    if (has_operator(a, '+') && b.size()) a = '(' + a + ')';
-    if (has_operator(b, '+') && a.size()) b = '(' + b + ')';
-    if (a.size() && b.size()) return a + '.' + b;
-    return a + b;
+std::string cat(std::string input, std::string b) {
+    if (has_operator(input, '+') && b.size()) input = '(' + input + ')';
+    if (has_operator(b, '+') && input.size()) b = '(' + b + ')';
+    if (input.size() && b.size()) return input + '.' + b;
+    return input + b;
 }
 
-void add(std::string& a, const std::string& b) {
-    if (a.size() && b.size()) a += "+";
-    a += b;
+void add(std::string& input, const std::string& b) {
+    if (input.size() && b.size()) input += "+";
+    input += b;
 }
 
 void delete_node(int n) {
@@ -48,22 +48,22 @@ void delete_node(int n) {
 }
 
 int main() {
-    a.deserialize();
+    input.deserialize();
 
-    int t = a.node();
-    a.edge(t, a.q0);
-    a.q0 = t;
-    t = a.node();
-    for (int i : a.qfinal)
-        a.edge(i, t);
-    a.qfinal = {t};
+    int t = input.node();
+    input.edge(t, input.q0);
+    input.q0 = t;
+    t = input.node();
+    for (int i : input.qfinal)
+        input.edge(i, t);
+    input.qfinal = {t};
 
-    edges.resize(a.size());
-    inv_edges.resize(a.size());
-    deleted_nodes.resize(a.size());
+    edges.resize(input.size());
+    inv_edges.resize(input.size());
+    deleted_nodes.resize(input.size());
     
-    for (int n = 0; n < a.size(); n++) {
-        for (auto&[c, set] : a.nodes[n]) {
+    for (int n = 0; n < input.size(); n++) {
+        for (auto&[c, set] : input.nodes[n]) {
             for (int v : set) {
                 add(edges[n][v], c ? std::string(1, alpha(c)) : "0");
                 add(inv_edges[v][n], c ? std::string(1, alpha(c)) : "0");
@@ -75,9 +75,9 @@ int main() {
         }
     }
 
-    for (int n = 0; n < a.size(); n++)
-        if (n != a.q0 && !a.qfinal.contains(n))
+    for (int n = 0; n < input.size(); n++)
+        if (n != input.q0 && !input.qfinal.contains(n))
             delete_node(n);
 
-    std::cout << edges[a.q0][*a.qfinal.begin()] << '\n';
+    std::cout << edges[input.q0][*input.qfinal.begin()] << '\n';
 }

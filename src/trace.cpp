@@ -48,7 +48,7 @@ static void print(const Automata& a) {
 }
 
 int main() {
-    Automata a;
-    a.deserialize();
-    print(a);
+    Automata input;
+    input.deserialize();
+    print(input);
 }

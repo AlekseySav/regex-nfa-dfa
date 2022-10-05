@@ -1,6 +1,6 @@
 #include "automata.h"
 
-Automata a;
+Automata input;
 
 typedef bool (*check)();
 
@@ -14,7 +14,7 @@ void do_assert(const char* name, bool cond) {
 bool is_nfa() { return true; }
 
 bool is_1nfa() {
-    for (auto& n : a.nodes)
+    for (auto& n : input.nodes)
         if (n[0].size())
             return false;
     return true;
@@ -22,7 +22,7 @@ bool is_1nfa() {
 
 bool is_dfa() {
     if (!is_1nfa()) return false;
-    for (auto& n : a.nodes)
+    for (auto& n : input.nodes)
         for (auto&[c, to] : n)
             if (to.size() > 1)
                 return false;
@@ -31,15 +31,15 @@ bool is_dfa() {
 
 bool is_cdfa() {
     if (!is_dfa()) return false;
-    for (auto& n : a.nodes)
-        for (int c = 1; c < a.max_literal; c++)
+    for (auto& n : input.nodes)
+        for (int c = 1; c < input.max_literal; c++)
             if (n[c].size() != 1)
                 return false;
     return true;
 }
 
 int main(int argc, char** argv) {
-    a.deserialize();
+    input.deserialize();
 
     std::unordered_map<std::string, check> checks = {
         { "nfa", is_nfa },

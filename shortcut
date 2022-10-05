@@ -1,0 +1,46 @@
+#!/bin/bash
+
+all_stages="re nfa 1nfa dfa cdfa min re"
+stages=""
+input="cat"
+print="cat"
+
+while [ ${1:0:1} == "-" ]; do
+    case $1 in
+        -i)     input="tools/input";;
+        -p)     print="./trace";;
+        -d)     print="./draw | dot -Tpng";;
+    esac
+    shift 1
+done
+
+if [ $3 ]; then
+    cmd="echo \"$3\" | $input"
+else
+    cmd="cat | $input"
+fi
+
+include=0
+
+for i in $all_stages; do
+    if [[ $1 = $i ]]; then
+        include=1
+    fi
+    if [[ $include = 1 ]]; then
+        stages="$stages $i"
+    fi
+    if [[ $2 = $i && $include = 1 ]]; then
+        break
+    fi
+done
+
+prev=$(echo $stages | awk '{print $1;}')
+for i in $stages; do
+    if [[ $i = $prev ]]; then
+        continue
+    fi
+    cmd="$cmd | ./$prev-$i"
+    prev=$i
+done
+
+eval "$cmd | $print"
