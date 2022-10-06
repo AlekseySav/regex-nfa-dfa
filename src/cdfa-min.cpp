@@ -16,6 +16,22 @@ Automata::edges_t invert_edges(const Automata& a) {
     return nodes;
 }
 
+auto process_node(auto& inverted, auto& marked, auto node_pair) {
+    auto[from, to] = node_pair;
+    std::queue<std::pair<int, int>> queue;
+    for (int symbol = 0; symbol < input.max_literal; symbol++) {
+        for (int r : inverted[from][symbol]) {
+            for (int s : inverted[to][symbol]) {
+                if (!marked[r][s]) {
+                    marked[r][s] = marked[s][r] = true;
+                    queue.push({r, s});
+                }
+            }
+        }
+    }
+    return queue;
+}
+
 std::vector<std::vector<bool>> build_table() {
     std::queue<std::pair<int, int>> queue;
     std::vector<std::vector<bool>> marked(input.size(), std::vector<bool>(input.size()));
@@ -29,17 +45,11 @@ std::vector<std::vector<bool>> build_table() {
         }
     }
     while (!queue.empty()) {
-        auto[from, to] = queue.front();
+        auto append = process_node(inverted, marked, queue.front());
         queue.pop();
-        for (int symbol = 0; symbol < input.max_literal; symbol++) {
-            for (int r : inverted[from][symbol]) {
-                for (int s : inverted[to][symbol]) {
-                    if (!marked[r][s]) {
-                        marked[r][s] = marked[s][r] = true;
-                        queue.push({r, s});
-                    }
-                }
-            }
+        while (append.size()) {
+            queue.push(append.front());
+            append.pop();
         }
     }
     return marked;
