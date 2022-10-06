@@ -9,17 +9,22 @@ void differ(const char* msg) {
 
 bool compare_automates(Automata& first_automata, Automata& second_automata, const std::vector<int>& perm) {
     if (first_automata.entry_state != perm[second_automata.entry_state]) return false;
-    for (int final : second_automata.final_states)
-        if (!first_automata.final_states.contains(perm[final]))
+    for (int final : second_automata.final_states) {
+        if (!first_automata.final_states.contains(perm[final])) {
             return false;
+        }
+    }
 
     for (int from = 0; from < second_automata.size(); from++) {
         for (auto&[symbol, set] : second_automata.nodes[from]) {
-            if (set.size() != first_automata.nodes[perm[from]][symbol].size())
+            if (set.size() != first_automata.nodes[perm[from]][symbol].size()) {
                 return false;
-            for (int to : set)
-                if (!first_automata.nodes[perm[from]][symbol].contains(perm[to]))
+            }
+            for (int to : set) {
+                if (!first_automata.nodes[perm[from]][symbol].contains(perm[to])) {
                     return false;
+                }
+            }
         }
     }
     return true;
