@@ -1,9 +1,9 @@
 /$
 
 / convert to CDFA and invert
-$ tools/input "%{in-1}" | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inv | ./run "%{str-1}" | tools/cmp "ab;a;zx;q;hello;abcss;aaad;daad;zaa;qaaq;aab;zaa;za;"
-$ tools/input "%{in-2}" | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inv | ./run "%{str-2}" | tools/cmp "aa;abaa;abb;abababaa;abababb;"
-$ tools/input "%{in-3}" | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inv | ./run "%{str-3}" | tools/cmp "aa;ababbabababa;aaba;ababbaba;ab;ababba;b;"
+$ tools/input "%{in-1}" | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inversed | ./run "%{str-1}" | tools/cmp "ab;a;zx;q;hello;abcss;aaad;daad;zaa;qaaq;aab;zaa;za;"
+$ tools/input "%{in-2}" | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inversed | ./run "%{str-2}" | tools/cmp "aa;abaa;abb;abababaa;abababb;"
+$ tools/input "%{in-3}" | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inversed | ./run "%{str-3}" | tools/cmp "aa;ababbabababa;aaba;ababbaba;ab;ababba;b;"
 
 # in-1
 q0: 4

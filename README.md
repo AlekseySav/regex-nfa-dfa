@@ -12,7 +12,7 @@ all subtasks are presented as separate programs
 - ```nfa-1nfa```             &mdash; remove all epsilon-edges from NFA
 - ```1nfa-dfa```             &mdash; convert NFA with no epsilon-edges into DFA
 - ```dfa-cdfa```             &mdash; convert DFA to CDFA
-- ```cdfa-inv```             &mdash; inverse CDFA
+- ```cdfa-inversed```        &mdash; inverse CDFA
 - ```cdfa-min```             &mdash; convert CDFA to minimal CDFA
 - ```cdfa-re```              &mdash; convert CDFA to regex
 
@@ -79,7 +79,7 @@ to reset default alphabet run
 - ```nfa-1nfa```
 - ```1nfa-dfa```
 - ```dfa-cdfa```
-- ```cdfa-inv```
+- ```cdfa-inversed```
 - ```re-nfa```
 - ```cdfa-min```
 - ```cdfa-re```

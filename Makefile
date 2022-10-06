@@ -1,7 +1,7 @@
 targets += libugraphviz.a alphabet.h
 targets += trace draw
 targets += run cmp-nfa is
-targets += re-nfa nfa-1nfa 1nfa-dfa dfa-cdfa cdfa-inv cdfa-min cdfa-re
+targets += re-nfa nfa-1nfa 1nfa-dfa dfa-cdfa cdfa-inversed cdfa-min cdfa-re
 
 ugraphviz-targets = vendor/ugraphviz/graph.o vendor/ugraphviz/registry.o vendor/ugraphviz/subgraph.o
 
