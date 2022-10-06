@@ -11,18 +11,16 @@ std::vector<size_t> edges;
 void register_edges(const Automata& input, Registry& reg) {
     for (int from = 0; from < input.size(); from++) {
         for (int to = 0; to < input.size(); to++) {
-            auto edges = input.get_edges(from, to);
-            if (!edges.size()) {
-                continue;
-            }
+            auto outgoing_edges = input.get_edges(from, to);
+            if (!outgoing_edges.size()) continue;
             std::string label;
-            for (int symbol : edges) {
-                label += (label.size() ? "," : "") + (symbol ? std::string(1, alpha(symbol)) : "eps");
-            }
+            for (int c : outgoing_edges)
+                label += (label.size() ? "," : "") + (c ? std::string(1, alpha(c)) : "eps");
             edges.push_back(reg.RegisterEdge(nodes[from], nodes[to]));
             reg.RegisterEdgeAttr(edges.back(), Attrs_label, label);
         }
     }
+    
 }
 
 int main() {

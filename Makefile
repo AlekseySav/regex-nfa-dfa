@@ -24,6 +24,7 @@ libugraphviz.a: $(ugraphviz-targets)
 
 %: src/%.cpp src/automata.h alphabet.h
 	$(CXX) -std=c++23 -Ivendor -o $@ $< -L. -lugraphviz
+#  -fPIC -fprofile-arcs -ftest-coverage
 
 %.o: %.cpp
 	$(CXX) -c -std=c++23 -Ivendor -o $@ $<

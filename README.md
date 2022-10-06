@@ -79,7 +79,7 @@ to reset default alphabet run
 - ```nfa-1nfa```
 - ```1nfa-dfa```
 - ```dfa-cdfa```
-- ```cdfa-inversed```
+- ```cdfa-inv```
 - ```re-nfa```
 - ```cdfa-min```
 - ```cdfa-re```
