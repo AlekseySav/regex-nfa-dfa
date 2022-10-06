@@ -19,8 +19,7 @@ void register_edges(const Automata& input, Registry& reg) {
             edges.push_back(reg.RegisterEdge(nodes[from], nodes[to]));
             reg.RegisterEdgeAttr(edges.back(), Attrs_label, label);
         }
-    }
-    
+    }    
 }
 
 int main() {

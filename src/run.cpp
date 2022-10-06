@@ -24,6 +24,20 @@ bool run(int state, std::string_view line) {
     return input.final_states.contains(state);
 }
 
+template<typename InputStream>
+void run_for_each_line(InputStream&& stream) {
+    std::string line;
+    while (std::getline(stream, line)) {
+        if (line[0] == '/') {
+            continue;
+        }
+        if (run(input.entry_state, line)) {
+            std::cout << line << ';';
+        }
+    }
+    std::cout << '\n';
+}
+
 int main(int argc, char** argv) {
     input.deserialize();
 
@@ -38,24 +52,10 @@ int main(int argc, char** argv) {
         arg++;
     }
 
-    std::ifstream ifs;
-    std::stringstream iss;
-    std::string line;
     if (read_from_file) {
-        ifs = std::ifstream(*arg);
+        run_for_each_line(std::ifstream(*arg));
     }
     else {
-        iss = std::stringstream(*arg);
+        run_for_each_line(std::stringstream(*arg));
     }
-    std::istream& is = read_from_file ? (std::istream&)ifs : (std::istream&)iss;
-
-    while (std::getline(is, line)) {
-        if (line[0] == '/') {
-            continue;
-        }
-        if (run(input.entry_state, line)) {
-            std::cout << line << ';';
-        }
-    }
-    std::cout << '\n';
 }

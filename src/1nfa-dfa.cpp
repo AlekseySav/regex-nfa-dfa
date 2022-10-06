@@ -20,13 +20,13 @@ int node(const state& origin_nodes) {
 }
 
 void tompson_bfs() {
-    std::queue<int> queue; /* index within o_list */
+    std::queue<int> node_queue; /* index within o_list */
     output.entry_state = node({input.entry_state});
-    queue.push(output.entry_state);
+    node_queue.push(output.entry_state);
 
-    while (queue.size()) {
-        int id_from = queue.front();
-        queue.pop();
+    while (node_queue.size()) {
+        int id_from = node_queue.front();
+        node_queue.pop();
         for (int symbol = 0; symbol < input.max_literal; symbol++) {
             const state& from_set = o_list[id_from];
             state to;
@@ -38,7 +38,7 @@ void tompson_bfs() {
             int id_to = std::find(o_list.begin(), o_list.end(), to) - o_list.begin();
             if (id_to == o_list.size()) {
                 id_to = node(to);
-                queue.push(id_to);
+                node_queue.push(id_to);
             }
             output.edge(id_from, id_to, symbol);
         }

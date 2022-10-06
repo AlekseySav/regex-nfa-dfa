@@ -86,6 +86,5 @@ int main() {
             }
         }
     }
-
     output.serialize();
 }

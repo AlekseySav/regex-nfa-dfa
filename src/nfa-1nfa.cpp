@@ -24,23 +24,19 @@ void chain_dfs(int p, int node) {
 
 int main(int argc, char** argv) {
     input.deserialize();
-
     used.resize(input.size());
     for (int node = 0; node < input.size(); node++) {
         chain_dfs(node, node);
         used.assign(input.size(), 0);
     }
-
     for (int node = 0; node < input.size(); node++) {
         input.nodes[node][char_id('\e')].clear();
     }
-
     used = input.get_reachable_nodes();
     for (int node = input.size() - 1; node >= 0; node--) {
         if (!used[node]) {
             input.remove_node(node);
         }
     }
-
     input.serialize();
 }

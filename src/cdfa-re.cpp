@@ -77,14 +77,7 @@ void add_temp_nodes() {
     input.final_states = {temp_node};
 }
 
-int main() {
-    input.deserialize();
-    add_temp_nodes();
-
-    edges.resize(input.size());
-    inverted_edges.resize(input.size());
-    deleted_nodes.resize(input.size());
-    
+void create_regex_automata() {
     for (int node = 0; node < input.size(); node++) {
         for (auto&[symbol, set] : input.nodes[node]) {
             for (int to : set) {
@@ -97,7 +90,18 @@ int main() {
             edges[node].emplace(node, "");
         }
     }
+}
 
+int main() {
+    input.deserialize();
+    add_temp_nodes();
+
+    edges.resize(input.size());
+    inverted_edges.resize(input.size());
+    deleted_nodes.resize(input.size());
+
+    create_regex_automata();
+    
     for (int node = 0; node < input.size(); node++) {
         if (node != input.entry_state && !input.final_states.contains(node)) {
             delete_node(node);

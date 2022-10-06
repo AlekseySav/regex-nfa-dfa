@@ -7,7 +7,7 @@ void differ(const char* msg) {
     exit(1);
 }
 
-bool compare(Automata& first_automata, Automata& second_automata, const std::vector<int>& perm) {
+bool compare_automates(Automata& first_automata, Automata& second_automata, const std::vector<int>& perm) {
     if (first_automata.entry_state != perm[second_automata.entry_state]) return false;
     for (int final : second_automata.final_states)
         if (!first_automata.final_states.contains(perm[final]))
@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
         perm[i] = i;
 
     do {
-        if (compare(first_automata, second_automata, perm))
+        if (compare_automates(first_automata, second_automata, perm))
             return 0;
     } while (std::next_permutation(perm.begin(), perm.end()));
     differ("edges differ");

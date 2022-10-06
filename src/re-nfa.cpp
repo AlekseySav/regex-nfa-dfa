@@ -36,6 +36,14 @@ static void slice_from_operator(char symbol, Slice* dest, Slice source) {
     }
 }
 
+/*
+ * so
+ * '*' applied when read
+ * '.' saved on stack and applied when next '+' read
+ * '+' applied in the end
+ * also dots are reduntand and applied implicitly
+ */
+
 static Slice compile(char terminate_char = '\n') {
     char symbol;
     int n_dots = 0;
@@ -60,7 +68,13 @@ static Slice compile(char terminate_char = '\n') {
     while (sub.size() > 1) {
         Slice dest = sub.top();
         sub.pop();
-        slice_from_operator(n_dots ? (n_dots--, '.') : '+', &sub.top(), dest);
+        if (n_dots) {
+            n_dots--;
+            slice_from_operator('.', &sub.top(), dest);
+        }
+        else {
+            slice_from_operator('+', &sub.top(), dest);
+        }
     }
     return sub.top();
 }
