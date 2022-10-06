@@ -1,7 +1,7 @@
 #include "automata.h"
 
 static std::vector<std::unordered_map<int, std::string>> edges;
-static std::vector<std::unordered_map<int, std::string>> inv_edges;
+static std::vector<std::unordered_map<int, std::string>> inverted_edges;
 static std::vector<bool> deleted_nodes;
 
 static Automata input;
@@ -50,7 +50,7 @@ void add(std::string& input, const std::string& append) {
 }
 
 void delete_node(int node) {
-    for (auto[prev, in_re] : inv_edges[node]) {
+    for (auto[prev, in_re] : inverted_edges[node]) {
         if (prev == node || deleted_nodes[prev]) {
             continue;
         }
@@ -60,7 +60,7 @@ void delete_node(int node) {
             } 
             auto re = cat(cat(in_re, star(edges[node][node])), out_re);
             add(edges[prev][next], re);
-            add(inv_edges[next][prev], re);
+            add(inverted_edges[next][prev], re);
         }
     }
     deleted_nodes[node] = true;
@@ -82,18 +82,18 @@ int main() {
     add_temp_nodes();
 
     edges.resize(input.size());
-    inv_edges.resize(input.size());
+    inverted_edges.resize(input.size());
     deleted_nodes.resize(input.size());
     
     for (int node = 0; node < input.size(); node++) {
         for (auto&[symbol, set] : input.nodes[node]) {
             for (int to : set) {
                 add(edges[node][to], symbol ? std::string(1, alpha(symbol)) : "0");
-                add(inv_edges[to][node], symbol ? std::string(1, alpha(symbol)) : "0");
+                add(inverted_edges[to][node], symbol ? std::string(1, alpha(symbol)) : "0");
             }
         }
         if (!edges[node].contains(node)) {
-            inv_edges[node].emplace(node, "");
+            inverted_edges[node].emplace(node, "");
             edges[node].emplace(node, "");
         }
     }
