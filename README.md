@@ -10,6 +10,7 @@ run `make task15` to build the bunary program or use `prac_task15` function from
 
 `./task15` (with no arguments) run tests to check if `task15` works correctly
 
+algorithm description in `algorithm.md`
 
 ## structure
 
