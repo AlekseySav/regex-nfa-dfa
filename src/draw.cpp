@@ -14,8 +14,12 @@ void register_edges(const Automata& input, Registry& reg) {
             auto outgoing_edges = input.get_edges(from, to);
             if (!outgoing_edges.size()) continue;
             std::string label;
-            for (int c : outgoing_edges)
-                label += (label.size() ? "," : "") + (c ? std::string(1, alpha(c)) : "eps");
+            for (int c : outgoing_edges) {
+                if (label.size()) {
+                    label += ',';
+                }
+                label += c ? std::string(1, alpha(c)) : "eps";
+            }
             edges.push_back(reg.RegisterEdge(nodes[from], nodes[to]));
             reg.RegisterEdgeAttr(edges.back(), Attrs_label, label);
         }

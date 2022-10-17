@@ -1,5 +1,16 @@
 # Regex, NFA, DFA, ...
 
+## task 15
+
+run `make task15` to build the bunary program or use `prac_task15` function from `src/automata.h`
+
+### task15 usage
+
+`./task15 <language-regex> <word>` outputs the result
+
+`./task15` (with no arguments) run tests to check if `task15` works correctly
+
+
 ## structure
 
 all subtasks are presented as separate programs
@@ -55,6 +66,10 @@ usage:
 - `-d` &mdash; run `./draw | dot -Tpng` for output data
 - `i/o format` &mdash; `re` `nfa` `1nfa` `dfa` `cdfa` `min` `re`
 - `input` &mdash; if specified, used as input data, overwise stdin is used
+
+### also is a library
+
+```libregex.a``` implements all functions declared in `src/automata.h`
 
 ## customizations
 

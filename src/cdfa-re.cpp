@@ -50,17 +50,17 @@ void add(std::string& input, const std::string& append) {
 }
 
 void delete_node(int node) {
-    for (auto[prev, in_re] : inverted_edges[node]) {
+    for (auto[prev, in_regex] : inverted_edges[node]) {
         if (prev == node || deleted_nodes[prev]) {
             continue;
         }
-        for (auto[next, out_re] : edges[node]) {
+        for (auto[next, out_regex] : edges[node]) {
             if (next == node || deleted_nodes[next]) {
                 continue;
             } 
-            auto re = cat(cat(in_re, star(edges[node][node])), out_re);
-            add(edges[prev][next], re);
-            add(inverted_edges[next][prev], re);
+            auto regex = cat(cat(in_regex, star(edges[node][node])), out_regex);
+            add(edges[prev][next], regex);
+            add(inverted_edges[next][prev], regex);
         }
     }
     deleted_nodes[node] = true;

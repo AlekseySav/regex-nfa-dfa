@@ -11,11 +11,13 @@ $ tools/input "%{in-5}" | ./1nfa-dfa | ./cmp-nfa "$(tools/input \"%{in-5}\")"
 $ tools/input "%{in-6}" | ./1nfa-dfa | ./is dfa
 $ tools/input "%{in-7}" | ./1nfa-dfa | ./is dfa
 $ tools/input "%{in-8}" | ./1nfa-dfa | ./is dfa
+$ tools/input "%{in-9}" | ./1nfa-dfa | ./is dfa
 
 / check if dfa is correct
 $ tools/input "%{in-6}" | ./1nfa-dfa | ./run "%{str-6}" | tools/cmp "$(tools/input \"%{in-6}\" | ./run \"%{str-6}\")"
 $ tools/input "%{in-7}" | ./1nfa-dfa | ./run "%{str-7}" | tools/cmp ";ab;aba;abab;ababa;ababab;"
 $ tools/input "%{in-8}" | ./1nfa-dfa | ./run "%{str-8}" | tools/cmp "abab;aba;abababa;abab;aba;a;"
+$ tools/input "%{in-9}" | ./1nfa-dfa | ./run "%{str-9}" | tools/cmp "abc;"
 
 # in-1
 q0: 1
@@ -138,3 +140,18 @@ ab
 ababba
 b
 a
+
+/ abc
+# in-9
+q0: 1
+final: 4
+1: a->2
+2: b->3
+3: c->4
+4:
+
+# str-9
+abc
+aa
+ab
+abcc
