@@ -1,0 +1,10 @@
+/ echo "(a+b+c)*" | ./re-nfa | ./nfa-1nfa | ./1nfa-dfa | ./run -f %{this} | tools/cmp ";a;aa;abc;cbac;"
+
+a
+aa
+aaaadb
+abc
+bababbad
+cbac
+d
+adada

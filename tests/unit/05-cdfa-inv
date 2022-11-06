@@ -1,0 +1,88 @@
+/$
+
+/ convert to CDFA and invert
+$ tools/input "%{in-1}" | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inversed | ./run "%{str-1}" | tools/cmp "ab;a;zx;q;hello;abcss;aaad;daad;zaa;qaaq;aab;zaa;za;"
+$ tools/input "%{in-2}" | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inversed | ./run "%{str-2}" | tools/cmp "aa;abaa;abb;abababaa;abababb;"
+$ tools/input "%{in-3}" | ./1nfa-dfa | ./dfa-cdfa | ./cdfa-inversed | ./run "%{str-3}" | tools/cmp "aa;ababbabababa;aaba;ababbaba;ab;ababba;b;"
+
+# in-1
+q0: 4
+final: 2 3 4 7 2
+1:
+2: a->3 b->4
+3: a->5 a->7
+4: z->7 y->3
+5: b->1 x->2 a->3 q->4
+6: a->6
+7: a->6
+
+# str-1
+ab
+a
+zx
+q
+hello
+abcss
+aaad
+daad
+yaa
+zaa
+qaaq
+aab
+yaxb
+yaa
+ya
+zaa
+za
+z
+yaaaaaaa
+
+/ "(ab+aba)*"
+# in-2
+q0: 5
+final: 1 4 5
+5: a->2 a->6
+2: b->4
+4: a->2 a->6
+6: b->3
+3: a->1
+1: a->2 a->6
+
+# str-2
+
+ab
+aba
+abab
+ababa
+ababab
+aa
+abaa
+abb
+abababaa
+abababb
+
+/ a(bab)*+a(ba)*
+# in-3
+q0: 1
+final: 2 3
+1: a->2 a->3
+2: b->4
+4: a->5
+5: b->2
+3: b->6
+6: a->3
+
+# str-3
+abab
+aba
+aa
+abababa
+ababbabababa
+aaba
+ababbaba
+abab
+aba
+ab
+ababba
+b
+a

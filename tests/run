@@ -1,0 +1,52 @@
+#!/bin/bash
+
+ext() {
+    cmd=()
+    declare -A labels
+    curr_label="none"
+
+    while read line; do
+        case ${line:0:1} in
+            '/') ;;
+            '#') curr_label=$(echo "${line:1}" | xargs);;
+            '$') cmd+=("${line:1}");;
+            *  ) labels["$curr_label"]=$(echo ${labels["$curr_label"]}"$line\n");;
+        esac
+    done <$1
+
+    for key in "${!labels[@]}"; do
+        labels["$key"]=$(echo "${labels["$key"]}" | sed "s/\\\\n/%/g")
+        labels["$key"]=${labels["$key"]::-1}
+    done
+
+    for command in "${cmd[@]}"; do
+        for key in "${!labels[@]}"; do
+            command=$(echo "$command" | sed "s/%{$key}/${labels["$key"]}/g")
+        done
+        command=$(echo $command | tr '%' '\n')
+        eval "$command"
+    done
+}
+
+do_file() {
+    sedfile=$(echo $1 | sed "s/\//\\\\\//g")
+    command=$(cat $1 | sed "1 s/%{this}/\"$sedfile\"/g" | head -n 1 | tail -c +2)
+    if [[ ${command:0:1} = '$' ]]; then
+        echo test \#$(basename $1 | sed "0,/-/s// /")...
+        ext $1
+    else
+        echo $1... >&2
+        eval $command
+    fi
+}
+
+if [ $# -ne 0 ]; then
+    for i in $@; do
+        do_file $(find tests/unit -name \*-$i)
+    done
+    exit
+fi
+
+for file in tests/*/*; do
+    do_file $file
+done

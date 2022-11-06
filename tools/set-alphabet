@@ -1,0 +1,23 @@
+#!/bin/python
+
+import sys
+
+id_to_alpha = '\033'
+alpha_to_id = [0 for _ in range(128)]
+
+for i in sys.argv[1]:
+    id_to_alpha += i
+
+for id, i in enumerate(id_to_alpha):
+    alpha_to_id[ord(i)] = id
+
+with open('alphabet.h', 'wt') as f:
+    print(f'''#pragma once
+
+inline const char id_to_alpha[] = {{ '\\033', '{"', '".join(id_to_alpha[1:])}' }};
+inline const char alpha_to_id[] = {{ {", ".join(map(str, alpha_to_id))} }};
+
+const int W = {len(id_to_alpha)};
+#define alpha(c) (id_to_alpha[(c)])
+#define char_id(c) (alpha_to_id[(c)])
+''', file=f)

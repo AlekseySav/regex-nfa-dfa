@@ -1,0 +1,27 @@
+#!/bin/python3
+
+from io import StringIO
+import sys
+import yaml
+
+if len(sys.argv) != 1:
+    sys.stdin = StringIO(sys.argv[1])
+
+input: dict = yaml.load(sys.stdin, Loader=yaml.FullLoader)
+
+print(len(input) - 2)
+print(int(input['q0']) - 1)
+final = str(input['final']).split(' ')
+print(len(final))
+print(' '.join(map(str, [int(i) - 1 for i in final])))
+del input['q0']
+del input['final']
+
+for state, edges in input.items():
+    if edges is None:
+        continue
+    for edge in edges.split(' '):
+        c, to = edge.split('->')
+        print(int(state) - 1, int(to) - 1, 0 if c == 'eps' else '-1 \'' + c)
+
+print(0, 0, 0)
